@@ -1,0 +1,898 @@
+[
+  {
+    "file": "2026-03-21_umsatzsteuer-automation.json",
+    "slug": "2026-03-21_umsatzsteuer-automation",
+    "date": "21. Mar 2026",
+    "name": "SteuerBot Pro",
+    "kategorie": "FinTech",
+    "einzeiler": "Automatisierung der Umsatzsteuer-Abrechnung für E-Commerce: OSS-Meldungen, Reverse Charge automatisch, One-Click-Compliance",
+    "score": 7.0,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 6,
+      "schmerzlevel": 9,
+      "machbarkeit": 7,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-02-24_ki-steuerberater-freelancer.json",
+    "slug": "2026-02-24_ki-steuerberater-freelancer",
+    "date": "24. Feb 2026",
+    "name": "TaxMate",
+    "kategorie": "FinTech",
+    "einzeiler": "KI-Steuerassistent, der Freelancern in der DACH-Region automatisch EÜR und Steuererklärungen erstellt",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-02-25_automatische-buchhaltung-kleinunternehmer.json",
+    "slug": "2026-02-25_automatische-buchhaltung-kleinunternehmer",
+    "date": "25. Feb 2026",
+    "name": "BuchungsBlitz",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Automatische Buchhaltung für Kleinunternehmer — Belege scannen, kategorisieren, GoBD-konform verbuchen",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-02-26_krypto-steuererklaerung-deutschland.json",
+    "slug": "2026-02-26_krypto-steuererklaerung-deutschland",
+    "date": "26. Feb 2026",
+    "name": "CoinSteuer",
+    "kategorie": "FinTech",
+    "einzeiler": "Krypto-Steuererklärung für Deutschland — Portfolio-Import, Haltefrist-Tracking, FIFO-Berechnung, ELSTER-Export",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-02-27_rechnungsstellung-ki.json",
+    "slug": "2026-02-27_rechnungsstellung-ki",
+    "date": "27. Feb 2026",
+    "name": "RechnungsFix",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Smarte Rechnungsstellung für Solopreneure — Angebote, Rechnungen, Mahnwesen in unter 60 Sekunden",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-02-28_nachhaltigkeits-tracker-kmu.json",
+    "slug": "2026-02-28_nachhaltigkeits-tracker-kmu",
+    "date": "28. Feb 2026",
+    "name": "GreenScore",
+    "kategorie": "GreenTech / Nachhaltigkeit",
+    "einzeiler": "ESG-Nachhaltigkeits-Tracker für KMU — CO2-Fußabdruck messen, Berichte erstellen, Förderungen finden",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-01_co2-fussabdruck-app.json",
+    "slug": "2026-03-01_co2-fussabdruck-app",
+    "date": "01. Mar 2026",
+    "name": "FootprintApp",
+    "kategorie": "GreenTech / Nachhaltigkeit",
+    "einzeiler": "Persönlicher CO2-Rechner mit Gamification — tracke deinen Alltag, erhalte Tipps, vergleiche mit anderen",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-02_energieverbrauch-optimieren-unternehmen.json",
+    "slug": "2026-03-02_energieverbrauch-optimieren-unternehmen",
+    "date": "02. Mar 2026",
+    "name": "EnergieOptima",
+    "kategorie": "GreenTech / Nachhaltigkeit",
+    "einzeiler": "Energieverbrauchs-Optimierung für Betriebe — Sensordaten analysieren, Sparpotenziale finden, automatisch steuern",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-03_ki-meal-prep-planer.json",
+    "slug": "2026-03-03_ki-meal-prep-planer",
+    "date": "03. Mar 2026",
+    "name": "MealGenie",
+    "kategorie": "E-Commerce / D2C",
+    "einzeiler": "KI-Meal-Prep-Planer für Familien — Wochenpläne, Einkaufslisten, Nährwerte, auf deutsche Supermärkte abgestimmt",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-04_handwerker-crm.json",
+    "slug": "2026-03-04_handwerker-crm",
+    "date": "04. Mar 2026",
+    "name": "HandwerkHero",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "CRM-System für Handwerksbetriebe mit automatisierter Terminplanung, Rechnungsstellung und Kundenverwaltung nach GoBD-Standard",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 9,
+      "machbarkeit": 7,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-04_regionale-lebensmittel-lieferung.json",
+    "slug": "2026-03-04_regionale-lebensmittel-lieferung",
+    "date": "04. Mar 2026",
+    "name": "HofDirekt",
+    "kategorie": "E-Commerce / D2C",
+    "einzeiler": "Regionale Lebensmittel direkt vom Bauernhof — Abo-Box mit Hofprodukten aus deiner Region",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-05_food-waste-reduktion-gastronomie.json",
+    "slug": "2026-03-05_food-waste-reduktion-gastronomie",
+    "date": "05. Mar 2026",
+    "name": "RestePlaner",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Food-Waste-Lösung für die Gastronomie — Bestandsprognosen, Resteverwertungs-Rezepte, Spendenlogistik",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-06_ki-bewerbung-schreiben.json",
+    "slug": "2026-03-06_ki-bewerbung-schreiben",
+    "date": "06. Mar 2026",
+    "name": "BewerberPro",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "KI-Bewerbungsassistent für den DACH-Arbeitsmarkt — Anschreiben, Lebenslauf, DIN-5008-konform",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-07_freelancer-matching-plattform-dach.json",
+    "slug": "2026-03-07_freelancer-matching-plattform-dach",
+    "date": "07. Mar 2026",
+    "name": "FreelanceHub",
+    "kategorie": "Marketplace / Plattform",
+    "einzeiler": "Freelancer-Matching für den DACH-Raum — KI-basiertes Matching nach Skills, Verfügbarkeit und Branche",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-08_remote-team-management-tool.json",
+    "slug": "2026-03-08_remote-team-management-tool",
+    "date": "08. Mar 2026",
+    "name": "TeamPilot",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Remote-Team-Management für DACH-Unternehmen — Zeiterfassung, Stimmungsbarometer, asynchrone Stand-ups",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-09_recommerce-plattform-deutschland.json",
+    "slug": "2026-03-09_recommerce-plattform-deutschland",
+    "date": "09. Mar 2026",
+    "name": "ZweiteChance",
+    "kategorie": "Marketplace / Plattform",
+    "einzeiler": "Recommerce-Plattform für Markenprodukte — geprüfte Retouren und B-Ware mit Garantie weiterverkaufen",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-10_ki-produktbeschreibungen.json",
+    "slug": "2026-03-10_ki-produktbeschreibungen",
+    "date": "10. Mar 2026",
+    "name": "TextForge",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "KI-Produkttexte für deutsche Onlineshops — SEO-optimiert, markenkonform, für Amazon, Shopify, Otto",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-11_dropshipping-alternative-dach.json",
+    "slug": "2026-03-11_dropshipping-alternative-dach",
+    "date": "11. Mar 2026",
+    "name": "EigenMarke",
+    "kategorie": "E-Commerce / D2C",
+    "einzeiler": "Private-Label-Plattform als Dropshipping-Alternative — eigene Produkte mit DACH-Lieferanten aufbauen",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-12_mentale-gesundheit-app-deutsch.json",
+    "slug": "2026-03-12_mentale-gesundheit-app-deutsch",
+    "date": "12. Mar 2026",
+    "name": "SeelenBalance",
+    "kategorie": "HealthTech / Wellness",
+    "einzeiler": "Mentale Gesundheit App auf Deutsch — KI-Coaching, Stimmungstagebuch, Therapeuten-Vermittlung",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-13_ki-arzttermin-buchung.json",
+    "slug": "2026-03-13_ki-arzttermin-buchung",
+    "date": "13. Mar 2026",
+    "name": "DocEasy",
+    "kategorie": "HealthTech / Wellness",
+    "einzeiler": "Arzttermin-Buchung ohne Wartezeit — freie Termine finden, online buchen, Erinnerungen, Befunde digital",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-14_betriebliches-gesundheitsmanagement-saas.json",
+    "slug": "2026-03-14_betriebliches-gesundheitsmanagement-saas",
+    "date": "14. Mar 2026",
+    "name": "VitalWork",
+    "kategorie": "HealthTech / Wellness",
+    "einzeiler": "Betriebliches Gesundheitsmanagement als SaaS — Mitarbeitergesundheit messen, Maßnahmen planen, ROI tracken",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-15_immobilienbewertung-ki.json",
+    "slug": "2026-03-15_immobilienbewertung-ki",
+    "date": "15. Mar 2026",
+    "name": "WertCheck",
+    "kategorie": "PropTech / Immobilien",
+    "einzeiler": "Sofort-Immobilienbewertung für Eigentümer — Vergleichswerte, Markttrends, Verkaufspreis-Empfehlung",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-16_freelancer-komplettloesung.json",
+    "slug": "2026-03-16_freelancer-komplettloesung",
+    "date": "16. Mar 2026",
+    "name": "FreelanceOS DACH",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Komplettlösung für Freelancer und Solo-Selbstständige: Rechnungstellung, Verträge, Timetracking, Scheinselbständigkeits-Checker (Fake-Employee Detector)",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 4,
+      "schmerzlevel": 8,
+      "machbarkeit": 7,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-16_nebenkostenabrechnung-automatisieren.json",
+    "slug": "2026-03-16_nebenkostenabrechnung-automatisieren",
+    "date": "16. Mar 2026",
+    "name": "NebenCheck",
+    "kategorie": "PropTech / Immobilien",
+    "einzeiler": "Nebenkostenabrechnung automatisch prüfen — Fehler finden, Widerspruch generieren, Geld zurückholen",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-17_wg-verwaltung-app.json",
+    "slug": "2026-03-17_wg-verwaltung-app",
+    "date": "17. Mar 2026",
+    "name": "WGPilot",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "WG-Verwaltung leicht gemacht — Kosten teilen, Putzplan, Einkaufslisten, gemeinsame Kasse",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-18_ki-nachhilfe-plattform.json",
+    "slug": "2026-03-18_ki-nachhilfe-plattform",
+    "date": "18. Mar 2026",
+    "name": "LernHero",
+    "kategorie": "EdTech",
+    "einzeiler": "KI-Nachhilfe für Schüler — personalisierte Erklärungen, Übungen nach Lehrplan, Prüfungsvorbereitung",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-19_weiterbildung-kmu-mitarbeiter.json",
+    "slug": "2026-03-19_weiterbildung-kmu-mitarbeiter",
+    "date": "19. Mar 2026",
+    "name": "SkillUp.de",
+    "kategorie": "EdTech",
+    "einzeiler": "Weiterbildungs-Plattform für KMU — Kursempfehlungen nach Jobrolle, Zertifikate, Bildungsprämie-kompatibel",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-20_sprachkurs-ki-personalisiert.json",
+    "slug": "2026-03-20_sprachkurs-ki-personalisiert",
+    "date": "20. Mar 2026",
+    "name": "SprechFit",
+    "kategorie": "EdTech",
+    "einzeiler": "Personalisierter KI-Sprachkurs — Aussprache-Training, Business-Deutsch, auf dein Niveau angepasst",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-21_vertragsanalyse-ki-deutsch.json",
+    "slug": "2026-03-21_vertragsanalyse-ki-deutsch",
+    "date": "21. Mar 2026",
+    "name": "VertragsCheck",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "KI-Vertragsanalyse auf Deutsch — AGBs verstehen, Klauseln prüfen, Risiken markieren in Sekunden",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-22_datenschutz-compliance-tool.json",
+    "slug": "2026-03-22_datenschutz-compliance-tool",
+    "date": "22. Mar 2026",
+    "name": "DatenSchild",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "DSGVO-Compliance-Tool für KMU — Verarbeitungsverzeichnis, Datenschutzerklärung, Audit-Checklisten",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-23_mietrecht-chatbot.json",
+    "slug": "2026-03-23_mietrecht-chatbot",
+    "date": "23. Mar 2026",
+    "name": "MietRecht24",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Mietrecht-Chatbot für Mieter — Mietpreisbremse prüfen, Mängel melden, Musterschreiben generieren",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-24_handwerker-plattform-ki-matching.json",
+    "slug": "2026-03-24_handwerker-plattform-ki-matching",
+    "date": "24. Mar 2026",
+    "name": "MeisterMatch",
+    "kategorie": "Marketplace / Plattform",
+    "einzeiler": "Handwerker-Vermittlung per KI-Matching — den richtigen Handwerker für dein Projekt in deiner Region",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-25_angebotserstellung-automatisieren-handwerk.json",
+    "slug": "2026-03-25_angebotserstellung-automatisieren-handwerk",
+    "date": "25. Mar 2026",
+    "name": "AngebotsBlitz",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Angebotserstellung für Handwerker in Minuten — Aufmaß eingeben, Materialkosten berechnen, PDF versenden",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-26_baustellendokumentation-app.json",
+    "slug": "2026-03-26_baustellendokumentation-app",
+    "date": "26. Mar 2026",
+    "name": "BauSnap",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Baustellendokumentation per Smartphone — Fotos, Zeitstempel, Mängelprotokoll, automatischer Bericht",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 8,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-28_co2-bilanzierung-kmu.json",
+    "slug": "2026-03-28_co2-bilanzierung-kmu",
+    "date": "28. Mar 2026",
+    "name": "KlimaBilanz",
+    "kategorie": "GreenTech / Nachhaltigkeit",
+    "einzeiler": "CO2-Bilanzierung für KMU nach CSRD: Automatische Erfassung von Emissionen, Reports für Compliance und Sustainability-Marketing",
+    "score": 6.6,
+    "scores": {
+      "suchvolumen": 4,
+      "wachstum": 8,
+      "schmerzlevel": 8,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-17_food-waste-marketplace.json",
+    "slug": "2026-03-17_food-waste-marketplace",
+    "date": "17. Mar 2026",
+    "name": "LebensmittelRetter",
+    "kategorie": "E-Commerce / D2C",
+    "einzeiler": "B2B Food Waste Marketplace: Überschüssige Lebensmittel von Produzenten direkt an Restaurants/Hotels/Geschäfte verkaufen – Nachhaltig & günstiger",
+    "score": 6.4,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 5,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-18_immobilien-bewertung-ai.json",
+    "slug": "2026-03-18_immobilien-bewertung-ai",
+    "date": "18. Mar 2026",
+    "name": "ImmoPilot",
+    "kategorie": "PropTech / Immobilien",
+    "einzeiler": "KI-basierte Immobilienbewertung für Privatverkäufer: Automatische Wertschätzung, Vergleichswerte, Gutachten-Alternative (unter 50€ statt 1000€+)",
+    "score": 6.4,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 4,
+      "schmerzlevel": 8,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-19_deutsch-sprachkurse-fachkraefte.json",
+    "slug": "2026-03-19_deutsch-sprachkurse-fachkraefte",
+    "date": "19. Mar 2026",
+    "name": "SprachBrücke",
+    "kategorie": "EdTech",
+    "einzeiler": "KI-Sprachkurse speziell für Fachkräfte: Deutsch B2+ mit Fachbereichs-Vokabular (Handwerk, Pflege, Tech) – Integration für schnelleres Arbeitsmarkt-Eintritt",
+    "score": 6.4,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 6,
+      "schmerzlevel": 8,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-25_nachhaltige-gebaeude-tech.json",
+    "slug": "2026-03-25_nachhaltige-gebaeude-tech",
+    "date": "25. Mar 2026",
+    "name": "CleanTech Match",
+    "kategorie": "GreenTech / Nachhaltigkeit",
+    "einzeiler": "Marketplace für nachhaltige Gebäudetechnik: Vermittlung von Energiespar-Lösungen (Solaranlagen, Wärmepumpen) an Privathaus und Gewerbe",
+    "score": 6.4,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 6,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 8
+    }
+  },
+  {
+    "file": "2026-03-05_mietrechts-assistent.json",
+    "slug": "2026-03-05_mietrechts-assistent",
+    "date": "05. Mar 2026",
+    "name": "MieterSchutz",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "KI-Chatbot für Mietrecht: Mietpreisbremse-Checks, Nebenkostenabrechnung, Mängelbeseitigung automatisch auf Basis aktueller DSGVO und deutschem Mietrecht",
+    "score": 6.3,
+    "scores": {
+      "suchvolumen": 7,
+      "wachstum": 3,
+      "schmerzlevel": 8,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 6
+    }
+  },
+  {
+    "file": "2026-03-20_online-apotheke-beratung.json",
+    "slug": "2026-03-20_online-apotheke-beratung",
+    "date": "20. Mar 2026",
+    "name": "ApothekeOnline",
+    "kategorie": "HealthTech / Wellness",
+    "einzeiler": "Digitale Apotheke mit Pharmazist-Chatbot-Beratung: Rezepte einreichen, Medikamente bestellen, Beratung von echten Apothekern",
+    "score": 6.3,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 4,
+      "schmerzlevel": 7,
+      "machbarkeit": 5,
+      "umsatzpotenzial": 9
+    }
+  },
+  {
+    "file": "2026-03-13_oekostrom-vergleich-wechsel.json",
+    "slug": "2026-03-13_oekostrom-vergleich-wechsel",
+    "date": "13. Mar 2026",
+    "name": "GrünStrom Vergleich",
+    "kategorie": "FinTech",
+    "einzeiler": "Dynamischer Ökostrom-Vergleichs-Service: Automatische Tarifoptimierung, Wechsel-Verwaltung",
+    "score": 6.1,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 4,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-14_nachlassplanung-digital.json",
+    "slug": "2026-03-14_nachlassplanung-digital",
+    "date": "14. Mar 2026",
+    "name": "Erbenberater",
+    "kategorie": "FinTech",
+    "einzeiler": "Digitale Nachlassplanung: Testament-Builder, Erbschaftssteuer-Rechner, Vermögensverzeichnis mit rechtlicher Überprüfung",
+    "score": 6.1,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 8,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-07_kita-matching.json",
+    "slug": "2026-03-07_kita-matching",
+    "date": "07. Mar 2026",
+    "name": "KitaPlatz.io",
+    "kategorie": "Marketplace / Plattform",
+    "einzeiler": "Online-Matching-Plattform für verfügbare Kitaplätze: Eltern finden verfügbare Plätze in ihrer Region",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-08_baustelle-dokumentation.json",
+    "slug": "2026-03-08_baustelle-dokumentation",
+    "date": "08. Mar 2026",
+    "name": "BauDoku Pro",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Cloud-basierte Baustellendokumentation mit Mängelmanagement, Foto-Markierung und digitale Abnahmeprotokolle",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-09_finanzplanung-selbststaendige.json",
+    "slug": "2026-03-09_finanzplanung-selbststaendige",
+    "date": "09. Mar 2026",
+    "name": "Finanzpilot",
+    "kategorie": "FinTech",
+    "einzeiler": "KI-gestützte Finanzplanung für Selbstständige: automatische EÜR, Steuern-Optimierung",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-10_pflegekraefte-vermittlung.json",
+    "slug": "2026-03-10_pflegekraefte-vermittlung",
+    "date": "10. Mar 2026",
+    "name": "PflegeConnect",
+    "kategorie": "Marketplace / Plattform",
+    "einzeiler": "Matching-Plattform für Pflegekräfte und Arbeitgeber: digitale Vermittlung mit Zeugnis-Verifizierung",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-11_hyperlocal-nachbarschaft.json",
+    "slug": "2026-03-11_hyperlocal-nachbarschaft",
+    "date": "11. Mar 2026",
+    "name": "NachbarMarkt",
+    "kategorie": "Marketplace / Plattform",
+    "einzeiler": "Hyperlocal Nachbarschafts-Marktplatz: Gebrauchtkauf/Verkauf, Nachbarschaftshilfe, Kleinanzeigen",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-12_ki-lernassistent.json",
+    "slug": "2026-03-12_ki-lernassistent",
+    "date": "12. Mar 2026",
+    "name": "StudyBuddy DE",
+    "kategorie": "EdTech",
+    "einzeiler": "KI-Lernassistent speziell für deutsche Unis: Klausurvorbereitung, Vorlesungs-Notiz-Verarbeitung",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 6,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-15_kfz-werkstatt-management.json",
+    "slug": "2026-03-15_kfz-werkstatt-management",
+    "date": "15. Mar 2026",
+    "name": "WerkstattDigital",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Komplettes Werkstatt-Management für Kfz-Betriebe: Terminverwaltung, Reparaturhistorie, TÜV/HU-Integration, Ersatzteil-Verwaltung",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 7,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-22_bio-gemueseabo-personalisiert.json",
+    "slug": "2026-03-22_bio-gemueseabo-personalisiert",
+    "date": "22. Mar 2026",
+    "name": "GemüseKiste 2.0",
+    "kategorie": "E-Commerce / D2C",
+    "einzeiler": "Personalisierte Bio-Gemüse-Abo-Box mit KI-Rezept-Integration: Liefert basierend auf Ernährungspräferenzen, mit Rezepten und Nährwerk-Info",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 5,
+      "schmerzlevel": 6,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 6
+    }
+  },
+  {
+    "file": "2026-03-23_virtuelle-assistenz-kmu.json",
+    "slug": "2026-03-23_virtuelle-assistenz-kmu",
+    "date": "23. Mar 2026",
+    "name": "BüroHeld",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "Virtuelle Assistenz Plattform für KMU: Intelligente Task-Automation, Admin-Support von Remote-Teams mit Deutsch-Fokus",
+    "score": 6.0,
+    "scores": {
+      "suchvolumen": 4,
+      "wachstum": 4,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-06_gastro-management.json",
+    "slug": "2026-03-06_gastro-management",
+    "date": "06. Mar 2026",
+    "name": "GastroFlow",
+    "kategorie": "SaaS / B2B",
+    "einzeiler": "All-in-One Betriebssystem für Restaurants: digitale Bestellverwaltung, Lieferantenverwaltung, Lagerhaltung und Mitarbeiterschichtplanung mit GoBD-konformer Kassenbindung",
+    "score": 5.9,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-26_ausbildung-management-ai.json",
+    "slug": "2026-03-26_ausbildung-management-ai",
+    "date": "26. Mar 2026",
+    "name": "Azubi.ai",
+    "kategorie": "EdTech",
+    "einzeiler": "KI-Ausbildungsmanager für Betriebe: Berichtsheft-Automation, IHK-Dokumentation, Ausbildungsplan-Tracking mit digitalen Berichtsheften",
+    "score": 5.7,
+    "scores": {
+      "suchvolumen": 4,
+      "wachstum": 4,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 6
+    }
+  },
+  {
+    "file": "2026-03-27_praxismanagement-aerzte.json",
+    "slug": "2026-03-27_praxismanagement-aerzte",
+    "date": "27. Mar 2026",
+    "name": "PraxisFlow",
+    "kategorie": "HealthTech / Wellness",
+    "einzeiler": "Praxismanagement für Ärzte & Therapeuten: Patientenverwaltung, Terminplanung, Abrechnungs-Integration nach KBV-Standard",
+    "score": 5.7,
+    "scores": {
+      "suchvolumen": 4,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 6,
+      "umsatzpotenzial": 7
+    }
+  },
+  {
+    "file": "2026-03-24_mietpreis-analyse-tool.json",
+    "slug": "2026-03-24_mietpreis-analyse-tool",
+    "date": "24. Mar 2026",
+    "name": "MietenCheck",
+    "kategorie": "PropTech / Immobilien",
+    "einzeiler": "Mietpreis-Analyse-Tool & Verhandlungs-Assistent: Mietspiegel-Vergleich, Marktanalyse, Verhandlungs-Tipps für Mietschützer",
+    "score": 5.6,
+    "scores": {
+      "suchvolumen": 5,
+      "wachstum": 3,
+      "schmerzlevel": 7,
+      "machbarkeit": 7,
+      "umsatzpotenzial": 5
+    }
+  }
+]

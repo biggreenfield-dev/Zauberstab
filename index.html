@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zauberstab — Finde Startup-Ideen für den DACH-Markt</title>
+  <meta name="description" content="Zauberstab verwandelt Trends und Community-Signale in validierte Geschäftsideen. Jeden Tag eine neue Idee mit Scorecard, Marktanalyse und Umsetzungsplan.">
+  <meta property="og:title" content="Zauberstab — Startup-Ideen für den DACH-Markt">
+  <meta property="og:description" content="Jeden Tag eine validierte Geschäftsidee mit Scorecard, Marktanalyse und Umsetzungsplan. Speziell für Deutschland, Österreich und die Schweiz.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zauberstab — Startup-Ideen für den DACH-Markt">
+  <meta name="twitter:description" content="Jeden Tag eine validierte Geschäftsidee mit Scorecard, Marktanalyse und Umsetzungsplan.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #09090b; --surface: #18181b; --surface2: #27272a;
+      --border: #27272a; --text: #fafafa; --muted: #a1a1aa; --dim: #71717a;
+      --accent: #fafafa; --accent-light: #e4e4e7; --accent-bg: rgba(250,250,250,0.06);
+      --green: #4ade80; --yellow: #facc15; --red: #f87171;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    /* Grain texture overlay */
+    body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.02; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    a { color: var(--text); text-decoration: none; }
+    #page-content { position: relative; z-index: 1; }
+
+    /* ── Sparkle Canvas ── */
+    #sparkle-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+    /* ── Wand SVG ── */
+    .wand-svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @keyframes wandGlow { 0%, 100% { filter: drop-shadow(0 0 3px rgba(250,250,250,0.3)); } 50% { filter: drop-shadow(0 0 8px rgba(250,250,250,0.6)); } }
+    .logo-spark { position: absolute; width: 3px; height: 3px; background: #fafafa; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 10; }
+
+    /* ── Nav ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(9,9,11,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: #fff; }
+    .logo-icon { position: relative; width: 34px; height: 34px; border-radius: 10px; background: #fafafa; display: flex; align-items: center; justify-content: center; color: #09090b; font-size: 18px; animation: wandGlow 4s ease-in-out infinite; overflow: visible; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--muted); transition: all 0.2s; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s cubic-bezier(0.2,0,0.38,0.9); }
+    .btn-primary { background: #fafafa; color: #09090b; }
+    .btn-primary:hover { box-shadow: 0 8px 24px rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.12); color: var(--muted); background: transparent; }
+    .btn-outline:hover { border-color: rgba(255,255,255,0.3); color: var(--text); }
+    .btn-large { padding: 14px 32px; font-size: 16px; border-radius: 14px; }
+
+    /* ── Hero ── */
+    .hero { padding: 140px 24px 100px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(250,250,250,0.03) 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { max-width: 800px; margin: 0 auto; position: relative; }
+    .badge { display: inline-flex; align-items: center; gap: 8px; background: var(--accent-bg); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; padding: 6px 16px; font-size: 13px; color: var(--muted); font-weight: 500; margin-bottom: 24px; }
+    .badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    h1 { font-size: clamp(2.5rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.15; margin-bottom: 20px; letter-spacing: -0.02em; }
+    .hero p { font-size: 1.1rem; color: var(--muted); max-width: 600px; margin: 0 auto 36px; }
+    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .stats { display: flex; gap: 48px; justify-content: center; margin-top: 64px; }
+    .stat-num { font-size: 1.75rem; font-weight: 800; }
+    .stat-label { font-size: 12px; color: var(--dim); margin-top: 4px; }
+
+    /* ── Waitlist ── */
+    .waitlist { padding: 60px 24px; }
+    .waitlist-box { max-width: 560px; margin: 0 auto; background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 40px; text-align: center; }
+    .waitlist-box h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+    .waitlist-box p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+    .email-form { display: flex; gap: 8px; }
+    .email-form input { flex: 1; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: var(--bg); color: var(--text); font-size: 14px; outline: none; font-family: inherit; transition: border-color 0.2s; }
+    .email-form input:focus { border-color: rgba(255,255,255,0.3); }
+    .email-form input::placeholder { color: var(--dim); }
+    .waitlist-count { margin-top: 16px; font-size: 13px; color: var(--dim); }
+    .success-msg { color: var(--green); font-weight: 600; font-size: 15px; }
+
+    /* ── Features ── */
+    .features { padding: 80px 24px; }
+    .features-inner { max-width: 1100px; margin: 0 auto; }
+    .section-title { text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .section-sub { text-align: center; color: var(--muted); margin-bottom: 48px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .feature-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 28px; transition: all 0.3s cubic-bezier(0.2,0,0.38,0.9); }
+    .feature-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+    .feature-icon { font-size: 2rem; margin-bottom: 16px; }
+    .feature-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { color: var(--muted); font-size: 14px; }
+
+    /* ── Idea Preview ── */
+    .preview { padding: 80px 24px; }
+    .preview-inner { max-width: 900px; margin: 0 auto; }
+    .idea-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 36px; transition: all 0.3s; }
+    .idea-card:hover { border-color: rgba(255,255,255,0.1); }
+    .idea-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .idea-tag { background: var(--accent-bg); color: var(--muted); font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.06); }
+    .idea-score { width: 72px; height: 72px; border-radius: 16px; background: #fafafa; display: flex; align-items: center; justify-content: center; color: #09090b; font-size: 1.75rem; font-weight: 900; box-shadow: 0 8px 30px rgba(255,255,255,0.08); }
+    .idea-card h3 { font-size: 1.5rem; font-weight: 800; margin: 8px 0; }
+    .idea-card .oneliner { color: var(--muted); font-size: 1rem; margin-bottom: 16px; }
+    .idea-card .desc { color: var(--accent-light); font-size: 14px; line-height: 1.7; margin-bottom: 24px; }
+    .score-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+    .score-row { display: flex; align-items: center; gap: 12px; }
+    .score-label { font-size: 12px; color: var(--dim); width: 110px; text-align: right; flex-shrink: 0; }
+    .score-track { flex: 1; height: 8px; background: var(--surface2); border-radius: 100px; overflow: hidden; }
+    .score-fill { height: 100%; border-radius: 100px; transition: width 1s ease; }
+    .score-fill.green { background: var(--green); }
+    .score-fill.yellow { background: var(--yellow); }
+    .score-fill.red { background: var(--red); }
+    .score-num { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; flex-shrink: 0; }
+    .blur-overlay { position: relative; }
+    .blur-overlay::after { content: 'Registriere dich kostenlos um alle Details zu sehen'; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, rgba(9,9,11,0.95) 60%); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 24px; font-size: 14px; color: var(--accent-light); font-weight: 600; border-radius: 16px; }
+
+    /* ── Pricing ── */
+    .pricing { padding: 80px 24px; }
+    .pricing-inner { max-width: 1000px; margin: 0 auto; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    @media (max-width: 768px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .price-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 20px; padding: 32px; position: relative; transition: all 0.3s cubic-bezier(0.2,0,0.38,0.9); }
+    .price-card:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+    .price-card.featured { background: var(--surface); border: 2px solid rgba(255,255,255,0.15); box-shadow: 0 8px 40px rgba(255,255,255,0.03); }
+    .price-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #fafafa; color: #09090b; font-size: 12px; font-weight: 700; padding: 4px 16px; border-radius: 100px; }
+    .price-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+    .price-card .price-desc { font-size: 12px; color: var(--dim); margin-bottom: 20px; }
+    .price-amount { font-size: 2.5rem; font-weight: 900; margin-bottom: 4px; }
+    .price-period { font-size: 13px; color: var(--dim); margin-bottom: 24px; }
+    .price-features { list-style: none; margin-bottom: 24px; }
+    .price-features li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--accent-light); padding: 6px 0; }
+    .price-features li::before { content: '✓'; color: var(--text); font-weight: 700; font-size: 13px; }
+
+    /* ── CTA Section ── */
+    .cta-section { padding: 60px 24px 80px; }
+    .cta-box { max-width: 700px; margin: 0 auto; background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 24px; padding: 48px 40px; text-align: center; position: relative; overflow: visible; }
+    .cta-box:hover { border-color: rgba(255,255,255,0.12); }
+    .cta-wand-wrapper { position: relative; display: inline-block; margin-bottom: 16px; overflow: visible; }
+    .cta-box h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 8px; }
+    .cta-box p { color: var(--muted); font-size: 14px; margin-bottom: 24px; }
+
+    /* ── Footer ── */
+    footer { border-top: 1px solid rgba(255,255,255,0.06); padding: 40px 24px; text-align: center; }
+    .footer-logo { display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 8px; }
+    footer p { font-size: 12px; color: var(--dim); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 120px 16px 60px; }
+      .email-form { flex-direction: column; }
+      .stats { gap: 24px; }
+      .score-bars { grid-template-columns: 1fr; }
+      .nav-links a { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="sparkle-canvas"></canvas>
+
+<div id="page-content">
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <div class="logo-icon"><svg class="wand-svg" width="18" height="18" viewBox="0 0 24 24"><path d="M15 4l-1 1 4 4 1-1a2.83 2.83 0 0 0-4-4z" fill="#09090b" stroke="none"/><path d="M14 5L3 16v4h4L18 9" stroke="#09090b" fill="none"/><circle cx="19" cy="3" r="1" fill="#09090b" opacity="0.4"/><circle cx="21" cy="6" r="0.6" fill="#09090b" opacity="0.3"/><circle cx="16.5" cy="1.5" r="0.5" fill="#09090b" opacity="0.25"/></svg></div>
+        Zauberstab
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="browse.html">Ideen</a>
+        <a href="verzaubern.html">Verzaubern</a>
+        <a href="#pricing">Preise</a>
+        <span id="nav-auth"><button class="btn btn-primary" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Kostenlos starten</button></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="badge">
+        <span class="badge-dot"></span>
+        Jeden Tag eine neue Startup-Idee
+      </div>
+      <h1>
+        Finde die Startup-Idee,<br>
+        die es wert ist gebaut zu werden
+      </h1>
+      <p>Zauberstab verwandelt Trends, Community-Signale und Marktdaten in validierte Geschäftsideen — speziell für den DACH-Markt.</p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary btn-large" onclick="document.getElementById('waitlist').scrollIntoView({behavior:'smooth'})">Auf die Warteliste</button>
+        <a href="#idea" class="btn btn-outline btn-large">Beispiel ansehen</a>
+      </div>
+      <div class="stats">
+        <div><div class="stat-num">100+</div><div class="stat-label">Validierte Ideen</div></div>
+        <div><div class="stat-num">12</div><div class="stat-label">Bewertungskriterien</div></div>
+        <div><div class="stat-num">DACH</div><div class="stat-label">Marktfokus</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Waitlist -->
+  <section class="waitlist" id="waitlist">
+    <div class="waitlist-box">
+      <h2>Sei dabei beim Launch</h2>
+      <p>Trag dich ein und erhalte die erste Idee kostenlos — plus Early-Bird-Rabatt.</p>
+      <div class="email-form" id="emailForm">
+        <input type="email" id="emailInput" placeholder="deine@email.de" required>
+        <button class="btn btn-primary" onclick="handleSignup()">Eintragen</button>
+      </div>
+      <div class="waitlist-count" id="waitlistMsg">
+        Bereits <strong>347</strong> Gründer auf der Warteliste
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="features-inner">
+      <h2 class="section-title">Dein unfairer Vorteil</h2>
+      <p class="section-sub">50+ Stunden Recherche, zusammengefasst in 10 Minuten pro Idee.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Idee des Tages</h3>
+          <p>Jeden Tag eine vollständig recherchierte Startup-Idee mit Marktanalyse, Scorecard und konkretem Umsetzungsplan.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>7-Punkte Scorecard</h3>
+          <p>Jede Idee wird anhand von Suchvolumen, Wachstum, Schmerzlevel, Machbarkeit, Gründer-Fit und mehr bewertet.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Beweis-Signale</h3>
+          <p>Reddit-Threads, Google Trends und YouTube-Daten zeigen dir, wo echte, messbare Nachfrage existiert.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🇩🇪</div>
+          <h3>DACH-Fokus</h3>
+          <p>Alle Daten, Keywords und Marktanalysen sind auf Deutschland, Österreich und die Schweiz zugeschnitten.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Trend-Erkennung</h3>
+          <p>Erkenne aufkommende Markttrends bevor sie Mainstream werden — basierend auf Suchdaten und Community-Signalen.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🛠️</div>
+          <h3>Umsetzungsplan</h3>
+          <p>Jede Idee kommt mit einem konkreten Fahrplan: von der Validierung über MVP bis zur Skalierung.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Idea Preview -->
+  <section class="preview" id="idea">
+    <div class="preview-inner">
+      <h2 class="section-title">Idee des Tages — Vorschau</h2>
+      <p class="section-sub">So sieht eine vollständige Ideen-Analyse aus.</p>
+      <div class="idea-card">
+        <div class="idea-header">
+          <div>
+            <span class="idea-tag">SaaS / FinTech</span>
+            <h3>KI-Steuerberater für Freelancer</h3>
+            <div class="oneliner">Ein KI-gestützter Steuerassistent, der Freelancern in der DACH-Region automatisch Steuererklärungen erstellt</div>
+          </div>
+          <div class="idea-score">7.4</div>
+        </div>
+        <div class="desc">
+          Freelancer in Deutschland verschwenden durchschnittlich 40+ Stunden pro Jahr mit Steuererklärungen. Ein KI-Assistent, der ELSTER-kompatible Erklärungen automatisch erstellt, Belege scannt und kategorisiert, und steuerliche Optimierungen vorschlägt.
+        </div>
+        <div class="score-bars">
+          <div class="score-row"><span class="score-label">Suchvolumen</span><div class="score-track"><div class="score-fill green" style="width:80%"></div></div><div class="score-num" style="background:var(--green)">8</div></div>
+          <div class="score-row"><span class="score-label">Wachstum</span><div class="score-track"><div class="score-fill green" style="width:90%"></div></div><div class="score-num" style="background:var(--green)">9</div></div>
+          <div class="score-row"><span class="score-label">Schmerzlevel</span><div class="score-track"><div class="score-fill green" style="width:80%"></div></div><div class="score-num" style="background:var(--green)">8</div></div>
+          <div class="score-row"><span class="score-label">Machbarkeit</span><div class="score-track"><div class="score-fill yellow" style="width:60%"></div></div><div class="score-num" style="background:var(--yellow)">6</div></div>
+          <div class="score-row"><span class="score-label">Gründer-Fit</span><div class="score-track"><div class="score-fill green" style="width:70%"></div></div><div class="score-num" style="background:var(--green)">7</div></div>
+          <div class="score-row"><span class="score-label">Umsatzpotenzial</span><div class="score-track"><div class="score-fill green" style="width:90%"></div></div><div class="score-num" style="background:var(--green)">9</div></div>
+          <div class="score-row"><span class="score-label">Schwierigkeit</span><div class="score-track"><div class="score-fill yellow" style="width:50%"></div></div><div class="score-num" style="background:var(--yellow)">5</div></div>
+        </div>
+
+        <div class="blur-overlay" style="margin-top:24px; padding:24px; min-height:120px; border-radius:16px; background:var(--surface);">
+          <div style="font-weight:700; margin-bottom:8px;">Warum jetzt?</div>
+          <div style="color:var(--muted); font-size:14px;">ELSTER-Digitalisierung 2025, KI-Akzeptanz im Mainstream, Freelancer-Boom...</div>
+          <div style="margin-top:16px; font-weight:700; margin-bottom:8px;">Beweis-Signale</div>
+          <div style="color:var(--muted); font-size:14px;">r/Freelance_DE: 340+ Posts über Steuerfrust...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="pricing-inner">
+      <h2 class="section-title">Einfache, faire Preise</h2>
+      <p class="section-sub">Starte kostenlos. Upgrade wenn du bereit bist.</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Monatlich</h3>
+          <div class="price-desc">Flexibel monatlich kündbar</div>
+          <div class="price-amount">14,99€</div>
+          <div class="price-period">/Monat</div>
+          <ul class="price-features">
+            <li>Idee des Tages</li>
+            <li>Ideen-Datenbank</li>
+            <li>Scorecard & Bewertungen</li>
+            <li>Community-Signale</li>
+          </ul>
+          <a href="#waitlist" class="btn btn-outline stripe-btn" data-plan="monthly" style="width:100%">Jetzt starten</a>
+        </div>
+        <div class="price-card featured">
+          <div class="price-badge">Beliebt</div>
+          <h3>Quartal</h3>
+          <div class="price-desc">Spare 11% gegenüber monatlich</div>
+          <div class="price-amount">39,99€</div>
+          <div class="price-period">/3 Monate (13,33€/Mo)</div>
+          <ul class="price-features">
+            <li>Alles aus Monatlich</li>
+            <li>KI-Ideen-Agent (Beta)</li>
+            <li>Erweiterte Keyword-Daten</li>
+            <li>Export-Funktionen</li>
+          </ul>
+          <a href="#waitlist" class="btn btn-primary stripe-btn" data-plan="quarterly" style="width:100%">Jetzt starten</a>
+        </div>
+        <div class="price-card">
+          <h3>Jährlich</h3>
+          <div class="price-desc">Spare 28% — nur 10,83€/Monat</div>
+          <div class="price-amount">129,99€</div>
+          <div class="price-period">/Jahr</div>
+          <ul class="price-features">
+            <li>Alles aus Quartal</li>
+            <li>Priority-Support</li>
+            <li>Früher Zugang zu Features</li>
+            <li>Unbegrenzte KI-Anfragen</li>
+          </ul>
+          <a href="#waitlist" class="btn btn-outline stripe-btn" data-plan="yearly" style="width:100%">Jetzt starten</a>
+        </div>
+      </div>
+      <p style="text-align:center; color:var(--dim); font-size:12px; margin-top:32px;">14 Tage Geld-zurück-Garantie · Jederzeit kündbar · Keine versteckten Kosten</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-box" id="cta-box">
+      <div class="cta-wand-wrapper">
+        <svg width="40" height="40" viewBox="0 0 24 24" style="vertical-align: middle; animation: wandGlow 4s ease-in-out infinite;"><path d="M15 4l-1 1 4 4 1-1a2.83 2.83 0 0 0-4-4z" fill="#fafafa" stroke="none"/><path d="M14 5L3 16v4h4L18 9" stroke="#fafafa" fill="none" stroke-width="1.5" stroke-linecap="round"/><circle cx="19" cy="3" r="1.5" fill="#fafafa" opacity="0.5"/><circle cx="21.5" cy="5.5" r="1" fill="#fafafa" opacity="0.3"/><circle cx="17" cy="1" r="0.8" fill="#fafafa" opacity="0.25"/></svg>
+      </div>
+      <h2>Bereit, die nächste große Idee zu finden?</h2>
+      <p>Starte kostenlos und erhalte jeden Tag eine validierte Startup-Idee für den DACH-Markt.</p>
+      <div class="email-form">
+        <input type="email" id="emailInput2" placeholder="deine@email.de">
+        <button class="btn btn-primary" onclick="handleSignup2()">Eintragen</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">
+      <div style="width:24px;height:24px;border-radius:6px;background:#fafafa;display:flex;align-items:center;justify-content:center;">
+        <svg width="12" height="12" viewBox="0 0 24 24"><path d="M15 4l-1 1 4 4 1-1a2.83 2.83 0 0 0-4-4z" fill="#09090b" stroke="none"/><path d="M14 5L3 16v4h4L18 9" stroke="#09090b" fill="none" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <span style="font-weight:600; color:var(--muted);">Zauberstab</span>
+    </div>
+    <p>Finde Startup-Ideen, die es wert sind gebaut zu werden. Für den DACH-Markt.</p>
+    <p style="margin-top:16px; font-size:11px;">© 2026 Zauberstab. Alle Rechte vorbehalten.</p>
+  </footer>
+
+<script>
+  /*
+   * GOOGLE SHEETS WAITLIST INTEGRATION
+   */
+  const API_URL = "https://script.google.com/macros/s/AKfycbzEcvaRuHcokN81F6RyTIB-5y7C4SfU6y0iUzhK9IIEtG5aKm_FPPQDlaE47NM0vWzG/exec";
+
+  async function loadWaitlistCount() {
+    if (API_URL === "DEINE_APPS_SCRIPT_URL") return;
+    try {
+      const res = await fetch(API_URL + "?action=count");
+      const data = await res.json();
+      if (data.success && data.count > 0) {
+        document.getElementById('waitlistMsg').innerHTML =
+          'Bereits <strong>' + data.count + '</strong> Gründer auf der Warteliste';
+      }
+    } catch (e) { console.log('Count fetch failed:', e); }
+  }
+  loadWaitlistCount();
+
+  async function submitToSheet(email, msgElement) {
+    if (API_URL === "DEINE_APPS_SCRIPT_URL") {
+      console.log('Waitlist signup (lokal):', email);
+      msgElement.innerHTML = '<span class="success-msg">✓ Du bist auf der Liste! Wir melden uns bald.</span>';
+      return;
+    }
+    msgElement.innerHTML = '<span style="color:var(--muted);">Wird eingetragen...</span>';
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain" },
+        body: JSON.stringify({
+          action: "waitlist",
+          email: email,
+          source: "landing_page",
+          utm: new URLSearchParams(window.location.search).get("utm_source") || ""
+        })
+      });
+      const data = await res.json();
+      if (data.success) {
+        msgElement.innerHTML = '<span class="success-msg">✓ Du bist auf der Liste! Bereits ' + data.count + ' Gründer warten auf den Launch.</span>';
+      } else if (data.error === "already_registered") {
+        msgElement.innerHTML = '<span class="success-msg">Du bist bereits auf der Liste!</span>';
+      } else {
+        msgElement.innerHTML = '<span style="color:var(--red);">Fehler: ' + (data.error || 'Unbekannt') + '</span>';
+      }
+    } catch (err) {
+      console.error('Signup error:', err);
+      msgElement.innerHTML = '<span style="color:var(--red);">Netzwerkfehler. Bitte versuche es erneut.</span>';
+    }
+  }
+
+  function handleSignup() {
+    const input = document.getElementById('emailInput');
+    const msg = document.getElementById('waitlistMsg');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) { input.style.borderColor = 'var(--red)'; return; }
+    input.value = '';
+    input.style.borderColor = 'rgba(255,255,255,0.1)';
+    submitToSheet(email, msg);
+  }
+
+  function handleSignup2() {
+    const input = document.getElementById('emailInput2');
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) { input.style.borderColor = 'var(--red)'; return; }
+    input.value = '';
+    submitToSheet(email, input.parentElement);
+  }
+
+  // Animate score bars on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.score-fill').forEach(bar => { bar.style.width = bar.style.width; });
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.score-bars').forEach(el => observer.observe(el));
+
+  // ── Reusable wand hover sparks ──
+  (function() {
+    function setupWandSparks(container, hoverTarget, opts) {
+      if (!container || !hoverTarget) return;
+      const o = Object.assign({ startX: 12, startY: -4, rangeX: 10, rangeY: 10, sizeMin: 1.5, sizeMax: 4, speedMin: 15, speedMax: 25, interval: 80, burst: 5 }, opts);
+      let sparkInterval = null;
+
+      function emitSpark() {
+        const spark = document.createElement('div');
+        spark.className = 'logo-spark';
+        spark.style.left = (o.startX + Math.random() * o.rangeX) + 'px';
+        spark.style.top = (o.startY + Math.random() * o.rangeY) + 'px';
+        spark.style.width = (o.sizeMin + Math.random() * (o.sizeMax - o.sizeMin)) + 'px';
+        spark.style.height = spark.style.width;
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = o.speedMin + Math.random() * (o.speedMax - o.speedMin);
+        const dx = Math.cos(angle) * speed;
+        const dy = Math.sin(angle) * speed;
+
+        container.appendChild(spark);
+
+        spark.animate([
+          { opacity: 0.9, transform: 'translate(0, 0) scale(1)', offset: 0 },
+          { opacity: 0.6, transform: `translate(${dx * 0.4}px, ${dy * 0.4}px) scale(1.1)`, offset: 0.3 },
+          { opacity: 0, transform: `translate(${dx}px, ${dy}px) scale(0)`, offset: 1 }
+        ], {
+          duration: 400 + Math.random() * 350,
+          easing: 'cubic-bezier(0.2, 0, 0.38, 0.9)',
+          fill: 'forwards'
+        }).onfinish = () => spark.remove();
+      }
+
+      hoverTarget.addEventListener('mouseenter', () => {
+        for (let i = 0; i < o.burst; i++) setTimeout(() => emitSpark(), i * 40);
+        sparkInterval = setInterval(emitSpark, o.interval);
+      });
+      hoverTarget.addEventListener('mouseleave', () => {
+        clearInterval(sparkInterval);
+        sparkInterval = null;
+      });
+    }
+
+    // Logo icon
+    setupWandSparks(
+      document.querySelector('.logo-icon'),
+      document.querySelector('.logo-icon'),
+      { startX: 8, startY: 20, rangeX: 4, rangeY: 4, sizeMin: 1.5, sizeMax: 3.5, speedMin: 15, speedMax: 25 }
+    );
+
+    // CTA box — sparks on the wand when mouse enters the whole box
+    setupWandSparks(
+      document.querySelector('.cta-wand-wrapper'),
+      document.getElementById('cta-box'),
+      { startX: 3, startY: 30, rangeX: 6, rangeY: 6, sizeMin: 2, sizeMax: 5, speedMin: 20, speedMax: 40, interval: 60, burst: 8 }
+    );
+  })();
+
+  // ── Fullscreen sparkle particle background ──
+  (function() {
+    const canvas = document.getElementById('sparkle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, particles = [];
+    const PARTICLE_COUNT = 50;
+
+    const spawnPoints = [];
+    for (let i = 0; i < 8; i++) {
+      spawnPoints.push({ x: Math.random() * 1920, y: Math.random() * 1080 });
+    }
+
+    function resize() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      spawnPoints.forEach(sp => {
+        sp.x = Math.random() * w;
+        sp.y = Math.random() * h;
+      });
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Spark {
+      constructor() { this.reset(true); }
+      reset(init) {
+        const sp = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+        this.x = sp.x + (Math.random() - 0.5) * 200;
+        this.y = sp.y + (Math.random() - 0.5) * 200;
+
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 0.08 + Math.random() * 0.3;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.friction = 0.997 + Math.random() * 0.002;
+        this.gravity = 0.0005 + Math.random() * 0.001;
+
+        this.size = 0.4 + Math.random() * 1.2;
+        this.opacity = 0;
+        this.maxOpacity = 0.15 + Math.random() * 0.3;
+        this.life = 0;
+        this.maxLife = 200 + Math.random() * 400;
+        this.twinkleSpeed = 0.03 + Math.random() * 0.06;
+        this.twinklePhase = Math.random() * Math.PI * 2;
+        this.trail = Math.random() > 0.85;
+        this.prevX = this.x;
+        this.prevY = this.y;
+      }
+      update() {
+        this.life++;
+        this.prevX = this.x;
+        this.prevY = this.y;
+        this.vx *= this.friction;
+        this.vy *= this.friction;
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+
+        const flashIn = this.maxLife * 0.25;
+        const fadeOut = this.maxLife * 0.4;
+        if (this.life < flashIn) {
+          this.opacity = (this.life / flashIn) * this.maxOpacity;
+        } else if (this.life > this.maxLife - fadeOut) {
+          this.opacity = ((this.maxLife - this.life) / fadeOut) * this.maxOpacity;
+        } else {
+          this.opacity = this.maxOpacity;
+        }
+        this.opacity *= 0.7 + 0.3 * Math.sin(this.life * this.twinkleSpeed + this.twinklePhase);
+        if (this.life >= this.maxLife) this.reset(false);
+      }
+      draw() {
+        if (this.trail && this.opacity > 0.1) {
+          const dx = this.x - this.prevX;
+          const dy = this.y - this.prevY;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist > 0.5) {
+            ctx.beginPath();
+            ctx.moveTo(this.prevX, this.prevY);
+            ctx.lineTo(this.x, this.y);
+            ctx.strokeStyle = `rgba(250, 250, 250, ${this.opacity * 0.3})`;
+            ctx.lineWidth = this.size * 0.5;
+            ctx.stroke();
+          }
+        }
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
+        ctx.fill();
+        if (this.opacity > 0.12) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(250, 250, 250, ${this.opacity * 0.06})`;
+          ctx.fill();
+        }
+        if (this.opacity > 0.2 && this.size > 0.9) {
+          const len = this.size * 2.5;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity * 0.25})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(this.x - len, this.y);
+          ctx.lineTo(this.x + len, this.y);
+          ctx.moveTo(this.x, this.y - len);
+          ctx.lineTo(this.x, this.y + len);
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Spark());
+
+    function driftSpawnPoints() {
+      spawnPoints.forEach(sp => {
+        sp.x += (Math.random() - 0.5) * 2;
+        sp.y += (Math.random() - 0.5) * 2;
+        if (sp.x < -50) sp.x = w + 50;
+        if (sp.x > w + 50) sp.x = -50;
+        if (sp.y < -50) sp.y = h + 50;
+        if (sp.y > h + 50) sp.y = -50;
+      });
+    }
+
+    let frameCount = 0;
+    function animate() {
+      ctx.clearRect(0, 0, w, h);
+      particles.forEach(p => { p.update(); p.draw(); });
+      frameCount++;
+      if (frameCount % 60 === 0) driftSpawnPoints();
+      requestAnimationFrame(animate);
+    }
+    animate();
+  })();
+
+  // ── Stripe Payment Links ──
+  // Trage hier deine Stripe Payment Links ein:
+  const STRIPE_LINKS = {
+    monthly:   '', // z.B. 'https://buy.stripe.com/DEIN_LINK'
+    quarterly: '',
+    yearly:    ''
+  };
+  // Sobald Stripe-Links gesetzt sind, leiten die Buttons direkt zum Checkout
+  document.querySelectorAll('.stripe-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      const plan = this.dataset.plan;
+      if (STRIPE_LINKS[plan]) {
+        e.preventDefault();
+        window.location.href = STRIPE_LINKS[plan];
+      }
+      // Wenn kein Stripe-Link → Default: Scroll zur Waitlist (#waitlist)
+    });
+  });
+</script>
+
+</div><!-- #page-content -->
+
+<script src="auth.js"></script>
+</body>
+</html>

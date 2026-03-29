@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zauberstab — Idee verzaubern</title>
+  <meta name="description" content="Gib deine Geschäftsidee ein und lass sie vom Zauberstab in eine vollständig validierte Analyse verwandeln.">
+  <meta property="og:title" content="Idee verzaubern — Zauberstab">
+  <meta property="og:description" content="Beschreibe deine Geschäftsidee und erhalte sofort eine vollständige Analyse mit Scorecard, Marktlücke, Wertleiter und Umsetzungsplan.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Idee verzaubern — Zauberstab">
+  <meta name="twitter:description" content="Lass deine Geschäftsidee vom Zauberstab in eine validierte Analyse verwandeln. Erste Idee kostenlos!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #09090b; --surface: #18181b; --surface2: #27272a;
+      --border: #27272a; --text: #fafafa; --muted: #a1a1aa; --dim: #71717a;
+      --accent: #fafafa; --accent-light: #e4e4e7; --accent-bg: rgba(250,250,250,0.06);
+      --green: #4ade80; --yellow: #facc15; --red: #f87171;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.02; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    a { color: var(--text); text-decoration: none; }
+    #page-content { position: relative; z-index: 1; }
+    #sparkle-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+    @keyframes wandGlow { 0%, 100% { filter: drop-shadow(0 0 3px rgba(250,250,250,0.3)); } 50% { filter: drop-shadow(0 0 8px rgba(250,250,250,0.6)); } }
+    .logo-spark { position: absolute; width: 3px; height: 3px; background: #fafafa; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 10; }
+
+    /* ── Nav ── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(9,9,11,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: #fff; }
+    .logo-icon { position: relative; width: 34px; height: 34px; border-radius: 10px; background: #fafafa; display: flex; align-items: center; justify-content: center; color: #09090b; font-size: 18px; animation: wandGlow 4s ease-in-out infinite; overflow: visible; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--muted); transition: all 0.2s; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-links a.active { color: #fff; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s cubic-bezier(0.2,0,0.38,0.9); }
+    .btn-primary { background: #fafafa; color: #09090b; }
+    .btn-primary:hover { box-shadow: 0 8px 24px rgba(255,255,255,0.1); transform: translateY(-2px); }
+    .btn-sm { padding: 6px 16px; font-size: 13px; border-radius: 8px; }
+    .btn-large { padding: 16px 40px; font-size: 16px; border-radius: 14px; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+    /* ── Hero ── */
+    .page-hero { padding: 120px 24px 40px; text-align: center; position: relative; }
+    .page-hero::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(250,250,250,0.03) 0%, transparent 70%); pointer-events: none; }
+    .page-hero-inner { max-width: 700px; margin: 0 auto; position: relative; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.15; margin-bottom: 16px; letter-spacing: -0.02em; }
+    .page-hero p { font-size: 1.05rem; color: var(--muted); max-width: 550px; margin: 0 auto; }
+
+    /* ── Free Badge ── */
+    .free-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(74,222,128,0.08); border: 1px solid rgba(74,222,128,0.2); border-radius: 100px; padding: 6px 18px; font-size: 13px; color: var(--green); font-weight: 600; margin-bottom: 24px; }
+    .free-badge.used { background: rgba(250,204,21,0.08); border-color: rgba(250,204,21,0.2); color: var(--yellow); }
+
+    /* ── Input Section ── */
+    .input-section { max-width: 700px; margin: 40px auto 0; padding: 0 24px; }
+    .input-box { background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; padding: 32px; transition: border-color 0.3s; }
+    .input-box:focus-within { border-color: rgba(255,255,255,0.2); }
+    .input-label { font-size: 14px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .input-label .label-hint { font-weight: 400; color: var(--dim); font-size: 12px; }
+    .idea-textarea { width: 100%; min-height: 160px; padding: 16px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); background: var(--bg); color: var(--text); font-size: 15px; font-family: inherit; line-height: 1.6; outline: none; resize: vertical; transition: border-color 0.2s; }
+    .idea-textarea:focus { border-color: rgba(255,255,255,0.25); }
+    .idea-textarea::placeholder { color: var(--dim); }
+    .char-count { text-align: right; font-size: 12px; color: var(--dim); margin-top: 8px; transition: color 0.2s; }
+    .char-count.warn { color: var(--yellow); }
+    .char-count.over { color: var(--red); }
+
+    /* Tips */
+    .tips { margin-top: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid rgba(255,255,255,0.04); }
+    .tips-title { font-size: 12px; font-weight: 600; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .tips-list li { font-size: 13px; color: var(--muted); padding-left: 20px; position: relative; }
+    .tips-list li::before { content: '✦'; position: absolute; left: 0; color: var(--dim); font-size: 10px; top: 2px; }
+
+    /* Submit area */
+    .submit-area { margin-top: 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .submit-info { font-size: 13px; color: var(--dim); }
+    .submit-info strong { color: var(--green); font-weight: 600; }
+
+    /* ── Magic Animation Overlay ── */
+    .magic-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 200; background: rgba(9,9,11,0.95); display: none; align-items: center; justify-content: center; flex-direction: column; }
+    .magic-overlay.active { display: flex; }
+    .magic-wand { font-size: 64px; margin-bottom: 32px; animation: wandFloat 2s ease-in-out infinite; }
+    @keyframes wandFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      25% { transform: translateY(-10px) rotate(-5deg); }
+      50% { transform: translateY(-5px) rotate(3deg); }
+      75% { transform: translateY(-12px) rotate(-3deg); }
+    }
+    .magic-text { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; }
+    .magic-subtext { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+    .magic-steps { display: flex; flex-direction: column; gap: 12px; max-width: 400px; width: 100%; }
+    .magic-step { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); opacity: 0.3; transition: all 0.5s ease; }
+    .magic-step.active { opacity: 1; border-color: rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); }
+    .magic-step.done { opacity: 0.6; }
+    .magic-step.done .step-icon { color: var(--green); }
+    .step-icon { font-size: 18px; width: 28px; text-align: center; }
+    .step-text { font-size: 14px; font-weight: 500; }
+    .magic-spinner { width: 28px; height: 28px; border: 2px solid rgba(255,255,255,0.1); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .magic-canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+
+    /* ── Result Section ── */
+    .result-section { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; display: none; }
+    .result-section.visible { display: block; }
+    .result-header { text-align: center; margin-bottom: 40px; padding: 32px; background: linear-gradient(135deg, rgba(74,222,128,0.05), rgba(250,250,250,0.02)); border: 1px solid rgba(74,222,128,0.1); border-radius: 20px; }
+    .result-header h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 8px; }
+    .result-header .result-subtitle { color: var(--muted); font-size: 15px; }
+
+    /* Result cards */
+    .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .result-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; transition: border-color 0.2s; }
+    .result-card:hover { border-color: rgba(255,255,255,0.12); }
+    .result-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .result-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* Score display */
+    .result-scores { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .result-score-item { text-align: center; padding: 20px 12px; background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; }
+    .result-score-value { font-size: 2rem; font-weight: 900; }
+    .result-score-label { font-size: 12px; color: var(--dim); margin-top: 4px; }
+    .score-high { color: var(--green); }
+    .score-mid { color: var(--yellow); }
+    .score-low { color: var(--red); }
+
+    /* Wertleiter compact */
+    .ladder-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 24px; }
+    .ladder-item { flex: 0 0 200px; padding: 20px; background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 14px; }
+    .ladder-item .tier { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 6px; }
+    .ladder-item .price { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+    .ladder-item .name { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .ladder-item .desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* Timeline compact */
+    .result-timeline { position: relative; padding-left: 28px; margin-bottom: 24px; }
+    .result-timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: rgba(255,255,255,0.06); border-radius: 1px; }
+    .timeline-step { position: relative; margin-bottom: 20px; }
+    .timeline-step::before { content: ''; position: absolute; left: -24px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: var(--surface2); border: 2px solid rgba(255,255,255,0.15); }
+    .timeline-step .phase { font-size: 12px; font-weight: 700; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; }
+    .timeline-step .detail { font-size: 14px; color: var(--muted); margin-top: 4px; line-height: 1.5; }
+
+    /* CTA after result */
+    .result-cta { text-align: center; padding: 40px; background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; margin-top: 40px; }
+    .result-cta h3 { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; }
+    .result-cta p { color: var(--muted); font-size: 14px; margin-bottom: 20px; }
+    .result-cta .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── Paywall Modal ── */
+    .paywall-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 300; background: rgba(9,9,11,0.9); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; padding: 24px; }
+    .paywall-overlay.active { display: flex; }
+    .paywall-box { max-width: 480px; width: 100%; background: var(--surface); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px; padding: 40px; text-align: center; position: relative; }
+    .paywall-close { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 8px; border: none; background: rgba(255,255,255,0.05); color: var(--muted); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    .paywall-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+    .paywall-icon { font-size: 48px; margin-bottom: 20px; }
+    .paywall-box h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
+    .paywall-box .paywall-desc { color: var(--muted); font-size: 14px; margin-bottom: 24px; line-height: 1.6; }
+    .paywall-features { text-align: left; margin-bottom: 24px; }
+    .paywall-feature { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; font-size: 14px; }
+    .paywall-feature .check { color: var(--green); font-weight: 700; margin-top: 1px; }
+    .paywall-price { font-size: 2rem; font-weight: 900; margin-bottom: 4px; }
+    .paywall-price-sub { font-size: 13px; color: var(--dim); margin-bottom: 20px; }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .submit-area { flex-direction: column; align-items: stretch; }
+      .submit-info { text-align: center; }
+      .result-scores { grid-template-columns: repeat(3, 1fr); }
+      .ladder-row { flex-direction: column; }
+      .ladder-item { flex: none; }
+    }
+    @media (max-width: 480px) {
+      .result-scores { grid-template-columns: repeat(2, 1fr); }
+      .page-hero h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="sparkle-canvas"></canvas>
+
+<div id="page-content">
+
+<!-- ── Nav ── -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon"><svg class="wand-svg" width="18" height="18" viewBox="0 0 24 24"><path d="M15 4l-1 1 4 4 1-1a2.83 2.83 0 0 0-4-4z" fill="#09090b" stroke="none"/><path d="M14 5L3 16v4h4L18 9" stroke="#09090b" fill="none"/><circle cx="19" cy="3" r="1" fill="#09090b" opacity="0.4"/><circle cx="21" cy="6" r="0.6" fill="#09090b" opacity="0.3"/><circle cx="16.5" cy="1.5" r="0.5" fill="#09090b" opacity="0.25"/></svg></div>
+      Zauberstab
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="browse.html">Ideen</a>
+      <a href="verzaubern.html" class="active">Verzaubern</a>
+      <a href="index.html#pricing">Preise</a>
+      <span id="nav-auth"><button class="btn btn-primary btn-sm" onclick="showAuthModal()">Anmelden</button></span>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div id="freeBadge" class="free-badge">✨ Erste Idee kostenlos verzaubern</div>
+    <h1>Deine Idee verzaubern</h1>
+    <p>Beschreibe deine Geschäftsidee und lass sie vom Zauberstab in eine vollständige Analyse mit Scorecard, Marktlücke, Wertleiter und Umsetzungsplan verwandeln.</p>
+  </div>
+</section>
+
+<!-- ── Input ── -->
+<div class="input-section" id="inputSection">
+  <div class="input-box">
+    <div class="input-label">
+      Deine Idee
+      <span class="label-hint">— Je detaillierter, desto besser die Analyse</span>
+    </div>
+    <textarea class="idea-textarea" id="ideaInput" placeholder="z.B. Eine App die Handwerkern hilft, ihre Aufträge zu verwalten und Angebote automatisch zu erstellen. Zielgruppe sind kleine Handwerksbetriebe in Deutschland mit 1-10 Mitarbeitern, die bisher alles per Excel oder Papier machen..." maxlength="2000"></textarea>
+    <div class="char-count" id="charCount">0 / 2.000</div>
+
+    <div class="tips">
+      <div class="tips-title">Tipps für bessere Ergebnisse</div>
+      <ul class="tips-list">
+        <li>Beschreibe das Problem, das du lösen willst</li>
+        <li>Nenne deine Zielgruppe (z.B. Freelancer, KMU, Studenten)</li>
+        <li>Erkläre, wie du Geld verdienen möchtest</li>
+        <li>Erwähne, ob du auf den DACH-Markt abzielst</li>
+      </ul>
+    </div>
+
+    <div class="submit-area">
+      <div class="submit-info" id="submitInfo">
+        <strong>Kostenlos</strong> — Keine Anmeldung nötig
+      </div>
+      <button class="btn btn-primary btn-large" id="submitBtn" disabled>
+        ✨ Idee verzaubern
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Magic Animation ── -->
+<div class="magic-overlay" id="magicOverlay">
+  <canvas class="magic-canvas" id="magicCanvas"></canvas>
+  <div class="magic-wand">
+    <svg width="64" height="64" viewBox="0 0 24 24"><path d="M15 4l-1 1 4 4 1-1a2.83 2.83 0 0 0-4-4z" fill="#fafafa" stroke="none"/><path d="M14 5L3 16v4h4L18 9" stroke="#fafafa" fill="none" stroke-width="1.5" stroke-linecap="round"/><circle cx="19" cy="3" r="1.5" fill="#fafafa" opacity="0.5"/><circle cx="21.5" cy="5.5" r="1" fill="#fafafa" opacity="0.3"/><circle cx="17" cy="1" r="0.8" fill="#fafafa" opacity="0.25"/></svg>
+  </div>
+  <div class="magic-text">Deine Idee wird verzaubert...</div>
+  <div class="magic-subtext" id="magicSubtext">Das dauert einen Moment</div>
+  <div class="magic-steps" id="magicSteps">
+    <div class="magic-step" data-step="0"><div class="step-icon">🔍</div><div class="step-text">Idee analysieren...</div></div>
+    <div class="magic-step" data-step="1"><div class="step-icon">📊</div><div class="step-text">Markt recherchieren...</div></div>
+    <div class="magic-step" data-step="2"><div class="step-icon">⚖️</div><div class="step-text">Scorecard berechnen...</div></div>
+    <div class="magic-step" data-step="3"><div class="step-icon">🪜</div><div class="step-text">Wertleiter erstellen...</div></div>
+    <div class="magic-step" data-step="4"><div class="step-icon">🗺️</div><div class="step-text">Umsetzungsplan generieren...</div></div>
+    <div class="magic-step" data-step="5"><div class="step-icon">✨</div><div class="step-text">Analyse finalisieren...</div></div>
+  </div>
+</div>
+
+<!-- ── Result ── -->
+<div class="result-section" id="resultSection">
+  <div class="result-header">
+    <h2 id="resultName">—</h2>
+    <div class="result-subtitle" id="resultEinzeiler">—</div>
+    <div style="margin-top: 12px;">
+      <span id="resultKategorie" style="display: inline-block; padding: 4px 14px; border-radius: 100px; background: var(--accent-bg); border: 1px solid rgba(255,255,255,0.08); font-size: 13px; color: var(--muted); font-weight: 500;"></span>
+    </div>
+  </div>
+
+  <!-- Scores -->
+  <div class="result-scores" id="resultScores"></div>
+
+  <!-- Overview Cards -->
+  <div class="result-grid" id="resultOverview"></div>
+
+  <!-- Wertleiter -->
+  <h3 style="font-size: 16px; font-weight: 700; margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">🪜 Wertleiter</h3>
+  <div class="ladder-row" id="resultLadder"></div>
+
+  <!-- Warum Jetzt -->
+  <h3 style="font-size: 16px; font-weight: 700; margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">⏰ Warum Jetzt</h3>
+  <div class="result-grid" id="resultWhyNow"></div>
+
+  <!-- Umsetzungsplan -->
+  <h3 style="font-size: 16px; font-weight: 700; margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">🗺️ Umsetzungsplan</h3>
+  <div class="result-timeline" id="resultTimeline"></div>
+
+  <!-- Keywords -->
+  <h3 style="font-size: 16px; font-weight: 700; margin: 32px 0 16px; display: flex; align-items: center; gap: 8px;">🔑 Keywords</h3>
+  <div id="resultKeywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px;"></div>
+
+  <!-- CTA -->
+  <div class="result-cta">
+    <h3>Gefällt dir die Analyse?</h3>
+    <p>Erhalte jeden Tag eine neue validierte Geschäftsidee mit Zauberstab Pro.</p>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="document.getElementById('inputSection').scrollIntoView({behavior:'smooth'}); resetForm();">✨ Neue Idee verzaubern</button>
+      <a href="index.html#waitlist" class="btn btn-primary" style="background: transparent; border: 1px solid rgba(255,255,255,0.12); color: var(--text);">Zur Warteliste →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── Paywall ── -->
+<div class="paywall-overlay" id="paywallOverlay">
+  <div class="paywall-box">
+    <button class="paywall-close" onclick="closePaywall()">×</button>
+    <div class="paywall-icon">🔮</div>
+    <h2>Mehr Ideen verzaubern?</h2>
+    <p class="paywall-desc">
+      Du hast deine kostenlose Verzauberung bereits genutzt.
+      Mit Zauberstab Pro kannst du unbegrenzt Ideen analysieren lassen.
+    </p>
+    <div class="paywall-features">
+      <div class="paywall-feature"><span class="check">✓</span><span>Unbegrenzt Ideen verzaubern</span></div>
+      <div class="paywall-feature"><span class="check">✓</span><span>Jeden Tag eine neue validierte Idee</span></div>
+      <div class="paywall-feature"><span class="check">✓</span><span>Vollständige Scorecard & Marktanalyse</span></div>
+      <div class="paywall-feature"><span class="check">✓</span><span>Umsetzungsplan & Wertleiter</span></div>
+      <div class="paywall-feature"><span class="check">✓</span><span>Community-Signale & Keywords</span></div>
+    </div>
+    <div class="paywall-price">14,99€<span style="font-size: 1rem; font-weight: 500; color: var(--muted);">/Monat</span></div>
+    <div class="paywall-price-sub">oder 129,99€/Jahr (spar 28%)</div>
+    <a href="index.html#waitlist" id="paywallCta" class="btn btn-primary btn-large" style="width: 100%;">Jetzt auf die Warteliste →</a>
+    <div style="margin-top: 12px; font-size: 12px; color: var(--dim);" id="paywallNote">Noch nicht live — trag dich auf die Warteliste ein</div>
+  </div>
+</div>
+
+</div><!-- #page-content -->
+
+<script>
+// ══════════════════════════════════════════════
+// IDEE VERZAUBERN — Core Logic
+// ══════════════════════════════════════════════
+
+const FREE_LIMIT = 1;
+const STORAGE_KEY = 'zauberstab_verzauberungen';
+
+// ── API Config ──
+// Trage hier deine Google Apps Script URL ein (aus verzaubern-apps-script.js)
+// Solange keine URL gesetzt ist, wird der Client-side Fallback genutzt.
+const VERZAUBERN_API_URL = ''; // z.B. 'https://script.google.com/macros/s/DEIN_SCRIPT_ID/exec'
+
+// ── State ──
+// Dual tracking: localStorage as quick check + server-side per UID
+function getUsageCount() {
+  try {
+    const user = getUser();
+    const key = user ? STORAGE_KEY + '_' + user.uid : STORAGE_KEY;
+    return parseInt(localStorage.getItem(key) || '0');
+  } catch { return 0; }
+}
+function incrementUsage() {
+  try {
+    const user = getUser();
+    const key = user ? STORAGE_KEY + '_' + user.uid : STORAGE_KEY;
+    localStorage.setItem(key, (getUsageCount() + 1).toString());
+  } catch {}
+}
+function hasFreeTrial() {
+  return getUsageCount() < FREE_LIMIT;
+}
+
+// ── UI Init ──
+const textarea = document.getElementById('ideaInput');
+const charCount = document.getElementById('charCount');
+const submitBtn = document.getElementById('submitBtn');
+const submitInfo = document.getElementById('submitInfo');
+const freeBadge = document.getElementById('freeBadge');
+
+function updateUI() {
+  const count = getUsageCount();
+  if (count >= FREE_LIMIT) {
+    freeBadge.textContent = '🔮 Kostenlose Verzauberung bereits genutzt';
+    freeBadge.className = 'free-badge used';
+    submitInfo.innerHTML = '<strong style="color:var(--yellow);">Pro erforderlich</strong> — oder <a href="index.html#waitlist" style="color:var(--accent); text-decoration:underline;">Warteliste beitreten</a>';
+  }
+}
+updateUI();
+
+textarea.addEventListener('input', () => {
+  const len = textarea.value.length;
+  charCount.textContent = len.toLocaleString('de-DE') + ' / 2.000';
+  charCount.className = 'char-count' + (len > 1800 ? ' warn' : '') + (len > 2000 ? ' over' : '');
+  submitBtn.disabled = len < 20;
+});
+
+submitBtn.addEventListener('click', () => {
+  if (textarea.value.length < 20) return;
+
+  // Require login
+  if (!isLoggedIn()) {
+    showAuthModal('Melde dich an, um deine Idee verzaubern zu lassen. Die erste Analyse ist kostenlos!');
+    // After login, auto-submit
+    onAuthReady((user) => {
+      if (user && textarea.value.length >= 20) {
+        if (!hasFreeTrial()) {
+          document.getElementById('paywallOverlay').classList.add('active');
+        } else {
+          startMagic(textarea.value.trim());
+        }
+      }
+    });
+    return;
+  }
+
+  if (!hasFreeTrial()) {
+    document.getElementById('paywallOverlay').classList.add('active');
+    return;
+  }
+  startMagic(textarea.value.trim());
+});
+
+function closePaywall() {
+  document.getElementById('paywallOverlay').classList.remove('active');
+}
+
+function resetForm() {
+  textarea.value = '';
+  charCount.textContent = '0 / 2.000';
+  submitBtn.disabled = true;
+  document.getElementById('resultSection').classList.remove('visible');
+  document.getElementById('inputSection').style.display = '';
+  updateUI();
+}
+
+// ══════════════════════════════════════════════
+// MAGIC ANIMATION
+// ══════════════════════════════════════════════
+async function startMagic(ideaText) {
+  const overlay = document.getElementById('magicOverlay');
+  const steps = document.querySelectorAll('.magic-step');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  startMagicParticles();
+
+  // Start API call in parallel with animation
+  let apiResult = null;
+  let apiDone = false;
+  if (VERZAUBERN_API_URL) {
+    fetchAnalysis(ideaText).then(r => { apiResult = r; apiDone = true; }).catch(() => { apiDone = true; });
+  } else {
+    apiDone = true; // No API, use client-side fallback
+  }
+
+  // Animate steps (min duration ~5s for the animation to feel right)
+  let currentStep = 0;
+  function nextStep() {
+    steps.forEach((s, i) => {
+      s.classList.remove('active', 'done');
+      if (i < currentStep) { s.classList.add('done'); s.querySelector('.step-icon').textContent = '✓'; }
+      else if (i === currentStep) s.classList.add('active');
+    });
+    currentStep++;
+    if (currentStep <= steps.length) {
+      // If API is still loading on last step, wait longer
+      const isLast = currentStep === steps.length;
+      const delay = isLast && !apiDone ? 2000 : (800 + Math.random() * 600);
+      setTimeout(nextStep, delay);
+    } else {
+      // Wait for API if still pending
+      function waitAndFinish() {
+        if (apiDone) {
+          finishMagic(ideaText, apiResult);
+        } else {
+          document.getElementById('magicSubtext').textContent = 'Noch einen Moment...';
+          setTimeout(waitAndFinish, 500);
+        }
+      }
+      setTimeout(waitAndFinish, 500);
+    }
+  }
+  setTimeout(nextStep, 300);
+}
+
+async function fetchAnalysis(ideaText) {
+  try {
+    const resp = await fetch(VERZAUBERN_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' }, // Apps Script needs text/plain for CORS
+      body: JSON.stringify({ action: 'verzaubern', idee: ideaText, uid: getUser()?.uid || '', email: getUser()?.email || '' })
+    });
+    const data = await resp.json();
+    if (data.success && data.analyse) return data.analyse;
+    return null;
+  } catch (e) {
+    console.warn('API call failed, using fallback:', e);
+    return null;
+  }
+}
+
+function finishMagic(ideaText, apiResult) {
+  const overlay = document.getElementById('magicOverlay');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+  document.getElementById('magicSubtext').textContent = 'Das dauert einen Moment';
+  stopMagicParticles();
+
+  // Use API result if available, otherwise client-side fallback
+  const result = apiResult || generateAnalysis(ideaText);
+  renderResult(result);
+  incrementUsage();
+  updateUI();
+
+  document.getElementById('inputSection').style.display = 'none';
+  const resultSection = document.getElementById('resultSection');
+  resultSection.classList.add('visible');
+  resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ══════════════════════════════════════════════
+// MAGIC PARTICLES (during animation)
+// ══════════════════════════════════════════════
+let magicAnimFrame = null;
+function startMagicParticles() {
+  const canvas = document.getElementById('magicCanvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const particles = [];
+  for (let i = 0; i < 80; i++) {
+    particles.push({
+      x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2,
+      size: 0.5 + Math.random() * 2, opacity: Math.random() * 0.5,
+      twinkle: Math.random() * Math.PI * 2, speed: 0.02 + Math.random() * 0.05
+    });
+  }
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      p.twinkle += p.speed;
+      p.opacity = 0.1 + 0.4 * Math.abs(Math.sin(p.twinkle));
+      if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${p.opacity})`;
+      ctx.fill();
+      if (p.size > 1.2) {
+        const len = p.size * 2.5;
+        ctx.strokeStyle = `rgba(255,255,255,${p.opacity * 0.3})`;
+        ctx.lineWidth = 0.5;
+        ctx.beginPath();
+        ctx.moveTo(p.x - len, p.y); ctx.lineTo(p.x + len, p.y);
+        ctx.moveTo(p.x, p.y - len); ctx.lineTo(p.x, p.y + len);
+        ctx.stroke();
+      }
+    });
+    magicAnimFrame = requestAnimationFrame(animate);
+  }
+  animate();
+}
+function stopMagicParticles() { if (magicAnimFrame) cancelAnimationFrame(magicAnimFrame); }
+
+// ══════════════════════════════════════════════
+// ANALYSIS GENERATOR (Client-side MVP)
+// ══════════════════════════════════════════════
+function generateAnalysis(text) {
+  // Extract keywords and generate a structured analysis
+  const words = text.toLowerCase();
+
+  // Detect category
+  let kategorie = 'SaaS/B2B';
+  if (words.match(/gesundheit|health|arzt|pflege|wellness|therapie|medizin|patient/)) kategorie = 'HealthTech/Wellness';
+  else if (words.match(/finanz|bank|steuer|geld|invest|kredit|versicher|zahlung/)) kategorie = 'FinTech';
+  else if (words.match(/bildung|lernen|schule|kurs|ausbildung|student|uni/)) kategorie = 'EdTech';
+  else if (words.match(/nachhaltig|klima|grün|umwelt|solar|energie|co2|recycl/)) kategorie = 'GreenTech/Nachhaltigkeit';
+  else if (words.match(/immobili|wohnung|miete|haus|bau|makler/)) kategorie = 'PropTech/Immobilien';
+  else if (words.match(/shop|handel|kaufen|verkauf|produkt|lager|versand|marktplatz/)) kategorie = 'E-Commerce/D2C';
+  else if (words.match(/plattform|vermittl|matching|marktplatz|vergleich/)) kategorie = 'Marketplace/Plattform';
+
+  // Generate a name from the text
+  const nameWords = text.split(/[.!?,;]/).filter(s=>s.trim().length > 5);
+  const firstSentence = (nameWords[0] || text).trim().substring(0, 60);
+
+  // Create scores based on text analysis
+  const hasTarget = text.match(/zielgruppe|für |kunden|nutzer|mitarbeiter/) ? 2 : 0;
+  const hasRevenue = text.match(/geld|umsatz|abo|preis|bezahl|kosten|monetar/) ? 2 : 0;
+  const hasProblem = text.match(/problem|lösung|schwierig|mangel|fehlt|braucht/) ? 2 : 0;
+  const hasDACH = text.match(/deutsch|dach|österreich|schweiz|berlin|münchen|wien/) ? 1 : 0;
+  const detail = Math.min(text.length / 200, 3); // More detail = better scores
+
+  const base = 4 + detail;
+  const scores = {
+    suchvolumen: Math.min(10, Math.round(base + hasTarget + Math.random() * 2)),
+    wachstum: Math.min(10, Math.round(base + hasProblem + Math.random() * 2)),
+    schmerzlevel: Math.min(10, Math.round(base + hasProblem + Math.random() * 1.5)),
+    machbarkeit: Math.min(10, Math.round(base + Math.random() * 2)),
+    gruender_fit: Math.min(10, Math.round(base + Math.random() * 2)),
+    umsatzpotenzial: Math.min(10, Math.round(base + hasRevenue + Math.random() * 2)),
+    schwierigkeit: Math.min(10, Math.round(base + Math.random() * 1.5))
+  };
+
+  // Build the result
+  return {
+    name: extractName(text),
+    einzeiler: firstSentence + (firstSentence.length >= 60 ? '...' : ''),
+    kategorie: kategorie,
+    scores: scores,
+    avg: (Object.values(scores).reduce((a,b)=>a+b,0) / Object.values(scores).length).toFixed(1),
+    overview: {
+      problem: extractSection(text, 'problem') || 'Die Zielgruppe hat ein klares Problem, das durch bestehende Lösungen nicht ausreichend adressiert wird.',
+      loesung: extractSection(text, 'lösung') || text.substring(0, 200) + (text.length > 200 ? '...' : ''),
+      bestehend: 'Bestehende Lösungen sind entweder zu teuer, zu komplex oder nicht auf den DACH-Markt zugeschnitten. Es fehlt eine spezialisierte, bezahlbare Alternative.',
+      vorteil: 'Spezialisierung auf den DACH-Markt, Kombination aus Technologie und lokaler Marktkenntnis. First-Mover-Vorteil in einer wachsenden Nische.'
+    },
+    warum_jetzt: {
+      timing: 'Digitalisierungswelle in der DACH-Region und steigende Akzeptanz von KI-gestützten Lösungen schaffen den idealen Markteintritt.',
+      regulierung: 'EU-weite Regulierungen (AI Act, DSGVO) bieten DACH-konformen Anbietern einen Wettbewerbsvorteil gegenüber US-Lösungen.',
+      technologie: 'KI-Modelle und Cloud-Infrastruktur sind jetzt ausgereift und bezahlbar genug für ein MVP mit überschaubarem Budget.'
+    },
+    wertleiter: [
+      { stufe: 'Lead Magnet', preis: 'Kostenlos', features: 'Kostenloser Schnellcheck oder Tool, das den Kern-Mehrwert demonstriert und E-Mail-Adressen sammelt.', zielgruppe: 'Neugierige Erstbesucher' },
+      { stufe: 'Starter', preis: '9-19€/Mo', features: 'Basisfunktionen für Einzelpersonen oder kleine Teams. Genug Wert für den täglichen Einsatz.', zielgruppe: 'Freelancer & Solopreneure' },
+      { stufe: 'Pro', preis: '29-49€/Mo', features: 'Voller Funktionsumfang mit erweiterten Features, Integrationen und Premium-Support.', zielgruppe: 'KMU & wachsende Teams' },
+      { stufe: 'Enterprise', preis: 'Auf Anfrage', features: 'Individuelle Anpassung, SLA, On-Premise-Option und dedizierter Account Manager.', zielgruppe: 'Große Unternehmen' }
+    ],
+    umsetzungsplan: [
+      { zeitraum: 'Monat 1-2', phase: 'Validation & MVP', detail: 'Landing Page, Waitlist, Prototyp der Kernfunktion, 20 User Interviews, Problem-Validation.' },
+      { zeitraum: 'Monat 3-5', phase: 'Beta & Product-Market Fit', detail: 'Closed Beta mit 100 Nutzern, iteratives Feedback, Core-Features fertigstellen, erste zahlende Kunden.' },
+      { zeitraum: 'Monat 6-9', phase: 'Public Launch & Growth', detail: 'Öffentlicher Launch, Content-Marketing, SEO-Strategie, Partnerschaften im DACH-Raum aufbauen.' },
+      { zeitraum: 'Monat 10-12', phase: 'Scale & Expansion', detail: 'Premium-Features, DACH-weite Expansion, API-Integrationen, Ziel: erste signifikante MRR-Marke.' }
+    ],
+    keywords: generateKeywords(text, kategorie)
+  };
+}
+
+function extractName(text) {
+  // Try to create a catchy German product name
+  const words = text.toLowerCase();
+  const prefixes = ['Smart', 'Digi', 'Turbo', 'Flow', 'Quick', 'Easy', 'Pro', 'Neo'];
+  const suffixes = ['Pilot', 'Hub', 'Mate', 'Flow', 'Check', 'Scout', 'Base', 'Desk'];
+
+  if (words.match(/handwerk/)) return prefixes[Math.floor(Math.random()*3)] + 'Werk';
+  if (words.match(/steuer|finanz/)) return 'Finanz' + suffixes[Math.floor(Math.random()*suffixes.length)];
+  if (words.match(/gesundheit|arzt/)) return 'Vital' + suffixes[Math.floor(Math.random()*suffixes.length)];
+  if (words.match(/immobili|wohnung/)) return 'Immo' + suffixes[Math.floor(Math.random()*suffixes.length)];
+  if (words.match(/bildung|lernen/)) return 'Lern' + suffixes[Math.floor(Math.random()*suffixes.length)];
+  if (words.match(/nachhaltig|klima/)) return 'Green' + suffixes[Math.floor(Math.random()*suffixes.length)];
+  if (words.match(/pflege/)) return 'Pflege' + suffixes[Math.floor(Math.random()*suffixes.length)];
+  if (words.match(/logistik|versand|lager/)) return 'Logi' + suffixes[Math.floor(Math.random()*suffixes.length)];
+  if (words.match(/essen|food|gastro|restaurant/)) return 'Gastro' + suffixes[Math.floor(Math.random()*suffixes.length)];
+
+  return prefixes[Math.floor(Math.random()*prefixes.length)] + suffixes[Math.floor(Math.random()*suffixes.length)];
+}
+
+function extractSection(text, keyword) {
+  const sentences = text.split(/[.!]/).filter(s => s.trim().length > 10);
+  const match = sentences.find(s => s.toLowerCase().includes(keyword));
+  return match ? match.trim() + '.' : null;
+}
+
+function generateKeywords(text, kategorie) {
+  const base = text.toLowerCase().split(/\s+/).filter(w => w.length > 4);
+  const unique = [...new Set(base)].slice(0, 3);
+  const catKeywords = {
+    'SaaS/B2B': ['SaaS Lösung Deutschland', 'B2B Software DACH', 'Automatisierung KMU'],
+    'FinTech': ['FinTech Deutschland', 'Finanzsoftware DACH', 'Digitale Finanzlösung'],
+    'EdTech': ['EdTech DACH', 'Online Lernen Deutschland', 'Bildungsplattform'],
+    'HealthTech/Wellness': ['HealthTech Deutschland', 'Gesundheits-App DACH', 'Digital Health'],
+    'GreenTech/Nachhaltigkeit': ['GreenTech DACH', 'Nachhaltigkeits-Software', 'Klimaschutz Tool'],
+    'PropTech/Immobilien': ['PropTech Deutschland', 'Immobilien-Software', 'Digitale Hausverwaltung'],
+    'E-Commerce/D2C': ['D2C Marke Deutschland', 'E-Commerce DACH', 'Online-Shop Lösung'],
+    'Marketplace/Plattform': ['Marktplatz DACH', 'Plattform Deutschland', 'Vermittlung Digital']
+  };
+  const extras = catKeywords[kategorie] || catKeywords['SaaS/B2B'];
+  const vols = ['1.2K/Mo', '2.8K/Mo', '890/Mo', '4.5K/Mo', '3.1K/Mo'];
+  const growths = ['+45%', '+120%', '+28%', '+65%', '+33%'];
+  return [...extras, ...unique.map(w => w.charAt(0).toUpperCase() + w.slice(1) + ' Software')].slice(0, 5).map((kw, i) => ({
+    keyword: kw,
+    volumen: vols[i % vols.length],
+    wachstum: growths[i % growths.length]
+  }));
+}
+
+// ══════════════════════════════════════════════
+// RENDER RESULT
+// ══════════════════════════════════════════════
+function renderResult(r) {
+  const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const scoreColor = v => v >= 7 ? 'score-high' : v >= 5 ? 'score-mid' : 'score-low';
+
+  document.getElementById('resultName').textContent = r.name;
+  document.getElementById('resultEinzeiler').textContent = r.einzeiler;
+  document.getElementById('resultKategorie').textContent = r.kategorie;
+
+  // Scores
+  const scoreLabels = { suchvolumen: 'Nachfrage', wachstum: 'Wachstum', schmerzlevel: 'Schmerzlevel', machbarkeit: 'Machbarkeit', umsatzpotenzial: 'Umsatzpotenzial' };
+  let scoresHtml = `<div class="result-score-item"><div class="result-score-value ${scoreColor(parseFloat(r.avg))}">${r.avg}</div><div class="result-score-label">Gesamt-Score</div></div>`;
+  for (const [key, label] of Object.entries(scoreLabels)) {
+    const v = r.scores[key] || 5;
+    scoresHtml += `<div class="result-score-item"><div class="result-score-value ${scoreColor(v)}">${v}</div><div class="result-score-label">${label}</div></div>`;
+  }
+  document.getElementById('resultScores').innerHTML = scoresHtml;
+
+  // Overview
+  document.getElementById('resultOverview').innerHTML = `
+    <div class="result-card"><h3>💡 Das Problem</h3><p>${esc(r.overview.problem)}</p></div>
+    <div class="result-card"><h3>🎯 Die Lösung</h3><p>${esc(r.overview.loesung)}</p></div>
+    <div class="result-card"><h3>🏢 Bestehende Lösungen</h3><p>${esc(r.overview.bestehend)}</p></div>
+    <div class="result-card"><h3>🏆 Unfairer Vorteil</h3><p>${esc(r.overview.vorteil)}</p></div>`;
+
+  // Wertleiter
+  const tierLabels = ['Lead Magnet', 'Frontend Offer', 'Core Offer', 'Continuity'];
+  document.getElementById('resultLadder').innerHTML = r.wertleiter.map((t, i) => `
+    <div class="ladder-item">
+      <div class="tier">${tierLabels[i] || 'Stufe ' + (i+1)}</div>
+      <div class="price">${esc(t.preis)}</div>
+      <div class="name">${esc(t.stufe)}</div>
+      <div class="desc">${esc(t.features)}</div>
+    </div>
+  `).join('');
+
+  // Warum Jetzt
+  document.getElementById('resultWhyNow').innerHTML = `
+    <div class="result-card"><h3>📈 Timing</h3><p>${esc(r.warum_jetzt.timing)}</p></div>
+    <div class="result-card"><h3>⚖️ Regulierung</h3><p>${esc(r.warum_jetzt.regulierung)}</p></div>
+    <div class="result-card"><h3>🤖 Technologie</h3><p>${esc(r.warum_jetzt.technologie)}</p></div>`;
+
+  // Umsetzungsplan
+  document.getElementById('resultTimeline').innerHTML = r.umsetzungsplan.map(p => `
+    <div class="timeline-step">
+      <div class="phase">${esc(p.phase)} — ${esc(p.zeitraum)}</div>
+      <div class="detail">${esc(p.detail)}</div>
+    </div>
+  `).join('');
+
+  // Keywords
+  document.getElementById('resultKeywords').innerHTML = r.keywords.map(k => `
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--surface);border:1px solid rgba(255,255,255,0.06);border-radius:100px;font-size:13px;">
+      <span style="font-weight:600;">${esc(k.keyword)}</span>
+      <span style="color:var(--dim);">${esc(k.volumen)}</span>
+      <span style="color:var(--green);font-size:12px;">${esc(k.wachstum)}</span>
+    </div>
+  `).join('');
+}
+
+// ══════════════════════════════════════════════
+// SPARKLE BACKGROUND (same as other pages)
+// ══════════════════════════════════════════════
+(function() {
+  const canvas = document.getElementById('sparkle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  const PARTICLE_COUNT = 50;
+  const spawnPoints = [];
+  for (let i = 0; i < 8; i++) spawnPoints.push({ x: Math.random() * 100, y: Math.random() * 100 });
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    spawnPoints.forEach(sp => { sp.x = Math.random() * w; sp.y = Math.random() * h; });
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Spark {
+    constructor() { this.reset(true); }
+    reset(init) {
+      const sp = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+      this.x = sp.x + (Math.random() - 0.5) * 200;
+      this.y = sp.y + (Math.random() - 0.5) * 200;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = 0.08 + Math.random() * 0.3;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed;
+      this.friction = 0.997 + Math.random() * 0.002;
+      this.gravity = 0.0005 + Math.random() * 0.001;
+      this.size = 0.4 + Math.random() * 1.2;
+      this.opacity = 0;
+      this.maxOpacity = 0.15 + Math.random() * 0.3;
+      this.life = 0;
+      this.maxLife = 200 + Math.random() * 400;
+      this.twinkleSpeed = 0.03 + Math.random() * 0.06;
+      this.twinklePhase = Math.random() * Math.PI * 2;
+      this.trail = Math.random() > 0.85;
+      this.prevX = this.x; this.prevY = this.y;
+    }
+    update() {
+      this.life++; this.prevX = this.x; this.prevY = this.y;
+      this.vx *= this.friction; this.vy *= this.friction; this.vy += this.gravity;
+      this.x += this.vx; this.y += this.vy;
+      const flashIn = this.maxLife * 0.25, fadeOut = this.maxLife * 0.4;
+      if (this.life < flashIn) this.opacity = (this.life / flashIn) * this.maxOpacity;
+      else if (this.life > this.maxLife - fadeOut) this.opacity = ((this.maxLife - this.life) / fadeOut) * this.maxOpacity;
+      else this.opacity = this.maxOpacity;
+      this.opacity *= 0.7 + 0.3 * Math.sin(this.life * this.twinkleSpeed + this.twinklePhase);
+      if (this.life >= this.maxLife) this.reset(false);
+    }
+    draw() {
+      if (this.trail && this.opacity > 0.1) {
+        const dx = this.x - this.prevX, dy = this.y - this.prevY;
+        if (Math.sqrt(dx*dx+dy*dy) > 0.5) {
+          ctx.beginPath(); ctx.moveTo(this.prevX, this.prevY); ctx.lineTo(this.x, this.y);
+          ctx.strokeStyle = `rgba(250,250,250,${this.opacity*0.3})`; ctx.lineWidth = this.size * 0.5; ctx.stroke();
+        }
+      }
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${this.opacity})`; ctx.fill();
+      if (this.opacity > 0.12) {
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size*3, 0, Math.PI*2);
+        ctx.fillStyle = `rgba(250,250,250,${this.opacity*0.06})`; ctx.fill();
+      }
+      if (this.opacity > 0.2 && this.size > 0.9) {
+        const len = this.size * 2.5;
+        ctx.strokeStyle = `rgba(255,255,255,${this.opacity*0.25})`; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(this.x-len,this.y); ctx.lineTo(this.x+len,this.y);
+        ctx.moveTo(this.x,this.y-len); ctx.lineTo(this.x,this.y+len); ctx.stroke();
+      }
+    }
+  }
+  for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Spark());
+  let frameCount = 0;
+  function animate() {
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p => { p.update(); p.draw(); });
+    frameCount++;
+    if (frameCount % 60 === 0) spawnPoints.forEach(sp => {
+      sp.x += (Math.random()-0.5)*2; sp.y += (Math.random()-0.5)*2;
+      if (sp.x < -50) sp.x = w+50; if (sp.x > w+50) sp.x = -50;
+      if (sp.y < -50) sp.y = h+50; if (sp.y > h+50) sp.y = -50;
+    });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// ── Wand hover sparks on logo ──
+(function() {
+  function setupWandSparks(container, hoverTarget, opts) {
+    if (!container || !hoverTarget) return;
+    const o = Object.assign({ startX: 12, startY: -4, rangeX: 10, rangeY: 10, sizeMin: 1.5, sizeMax: 4, speedMin: 15, speedMax: 25, interval: 80, burst: 5 }, opts);
+    let sparkInterval = null;
+    function emitSpark() {
+      const spark = document.createElement('div');
+      spark.className = 'logo-spark';
+      spark.style.left = (o.startX + Math.random() * o.rangeX) + 'px';
+      spark.style.top = (o.startY + Math.random() * o.rangeY) + 'px';
+      spark.style.width = (o.sizeMin + Math.random() * (o.sizeMax - o.sizeMin)) + 'px';
+      spark.style.height = spark.style.width;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = o.speedMin + Math.random() * (o.speedMax - o.speedMin);
+      const dx = Math.cos(angle) * speed, dy = Math.sin(angle) * speed;
+      container.appendChild(spark);
+      spark.animate([
+        { opacity: 0.9, transform: 'translate(0,0) scale(1)', offset: 0 },
+        { opacity: 0.6, transform: `translate(${dx*0.4}px,${dy*0.4}px) scale(1.1)`, offset: 0.3 },
+        { opacity: 0, transform: `translate(${dx}px,${dy}px) scale(0)`, offset: 1 }
+      ], { duration: 400 + Math.random() * 350, easing: 'cubic-bezier(0.2,0,0.38,0.9)', fill: 'forwards' }).onfinish = () => spark.remove();
+    }
+    hoverTarget.addEventListener('mouseenter', () => {
+      for (let i = 0; i < o.burst; i++) setTimeout(() => emitSpark(), i * 40);
+      sparkInterval = setInterval(emitSpark, o.interval);
+    });
+    hoverTarget.addEventListener('mouseleave', () => { clearInterval(sparkInterval); sparkInterval = null; });
+  }
+  setupWandSparks(document.querySelector('.logo-icon'), document.querySelector('.logo-icon'),
+    { startX: 8, startY: 20, rangeX: 4, rangeY: 4, sizeMin: 1.5, sizeMax: 3.5, speedMin: 15, speedMax: 25 });
+})();
+</script>
+<script src="auth.js"></script>
+</body>
+</html>

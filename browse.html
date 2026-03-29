@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ideen-Datenbank — Zauberstab</title>
+  <meta name="description" content="Durchsuche 56+ validierte Geschäftsideen für den DACH-Markt. Jede Idee mit Scorecard, Marktanalyse, Wertleiter und Umsetzungsplan.">
+  <meta property="og:title" content="Ideen-Datenbank — Zauberstab">
+  <meta property="og:description" content="56+ validierte Startup-Ideen für Deutschland, Österreich und die Schweiz. Filtere nach Kategorie, Score und Trend.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ideen-Datenbank — Zauberstab">
+  <meta name="twitter:description" content="56+ validierte Startup-Ideen für den DACH-Markt mit Scorecard und Marktanalyse.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #09090b; --surface: #18181b; --surface2: #27272a;
+      --border: #27272a; --text: #fafafa; --muted: #a1a1aa; --dim: #71717a;
+      --accent: #fafafa; --accent-light: #e4e4e7; --accent-bg: rgba(250,250,250,0.06);
+      --green: #4ade80; --yellow: #facc15; --red: #f87171;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.02; pointer-events: none; z-index: 9999; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    a { color: var(--text); text-decoration: none; }
+    #page-content { position: relative; z-index: 1; }
+    #sparkle-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+    .wand-svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    @keyframes wandGlow { 0%, 100% { filter: drop-shadow(0 0 3px rgba(250,250,250,0.3)); } 50% { filter: drop-shadow(0 0 8px rgba(250,250,250,0.6)); } }
+    .logo-spark { position: absolute; width: 3px; height: 3px; background: #fafafa; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 10; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(9,9,11,0.85); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.2rem; color: #fff; }
+    .logo-icon { position: relative; width: 34px; height: 34px; border-radius: 10px; background: #fafafa; display: flex; align-items: center; justify-content: center; color: #09090b; font-size: 18px; animation: wandGlow 4s ease-in-out infinite; overflow: visible; }
+    .nav-links { display: flex; align-items: center; gap: 8px; }
+    .nav-links a { padding: 6px 14px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--muted); transition: all 0.2s; }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.05); }
+    .nav-links a.active { color: #fff; background: rgba(255,255,255,0.08); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; padding: 10px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; border: none; cursor: pointer; transition: all 0.2s; }
+    .btn-primary { background: #fafafa; color: #09090b; }
+    .btn-primary:hover { box-shadow: 0 8px 24px rgba(255,255,255,0.1); transform: translateY(-2px); }
+
+    /* Page Header */
+    .page-header { padding: 100px 24px 40px; text-align: center; }
+    .page-header h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 900; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .page-header p { color: var(--muted); font-size: 1rem; max-width: 500px; margin: 0 auto; }
+
+    /* Controls */
+    .controls { max-width: 1200px; margin: 0 auto 32px; padding: 0 24px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .search-box { flex: 1; min-width: 200px; padding: 10px 16px 10px 40px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: var(--surface); color: var(--text); font-size: 14px; font-family: inherit; outline: none; transition: border-color 0.2s; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 14px center; }
+    .search-box:focus { border-color: rgba(255,255,255,0.3); }
+    .search-box::placeholder { color: var(--dim); }
+    .filter-btn { padding: 8px 16px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); background: transparent; color: var(--muted); font-size: 13px; font-weight: 500; font-family: inherit; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+    .filter-btn:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
+    .filter-btn.active { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); color: var(--text); }
+    .sort-select { padding: 8px 32px 8px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08); background: var(--surface); color: var(--muted); font-size: 13px; font-family: inherit; cursor: pointer; outline: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+
+    /* Stats bar */
+    .stats-bar { max-width: 1200px; margin: 0 auto 20px; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .stats-bar span { font-size: 13px; color: var(--dim); }
+
+    /* Grid */
+    .ideas-grid { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+
+    /* Idea Card */
+    .idea-card { background: var(--surface); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.3s cubic-bezier(0.2,0,0.38,0.9); display: flex; flex-direction: column; }
+    .idea-card:hover { border-color: rgba(255,255,255,0.15); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.5); }
+    .idea-card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .idea-card-category { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--dim); background: rgba(255,255,255,0.04); padding: 3px 10px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.06); }
+    .idea-card-score { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; flex-shrink: 0; }
+    .score-high { background: rgba(74,222,128,0.1); color: var(--green); border: 1px solid rgba(74,222,128,0.15); }
+    .score-mid { background: rgba(250,204,21,0.1); color: var(--yellow); border: 1px solid rgba(250,204,21,0.15); }
+    .score-low { background: rgba(248,113,113,0.1); color: var(--red); border: 1px solid rgba(248,113,113,0.15); }
+    .idea-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; line-height: 1.3; }
+    .idea-card-desc { font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .idea-card-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.04); }
+    .idea-card-date { font-size: 11px; color: var(--dim); }
+    .idea-card-bars { display: flex; gap: 3px; align-items: flex-end; height: 20px; }
+    .idea-card-bar { width: 4px; border-radius: 2px; background: rgba(255,255,255,0.15); transition: background 0.2s; }
+    .idea-card:hover .idea-card-bar { background: rgba(255,255,255,0.25); }
+    .idea-card-bar.high { background: var(--green); }
+    .idea-card-bar.mid { background: var(--yellow); }
+    .idea-card-bar.low { background: var(--red); }
+
+    /* Empty state */
+    .empty-state { grid-column: 1 / -1; text-align: center; padding: 80px 24px; }
+    .empty-state p { color: var(--dim); font-size: 15px; }
+
+    @media (max-width: 640px) {
+      .ideas-grid { grid-template-columns: 1fr; }
+      .controls { flex-direction: column; }
+      .search-box { width: 100%; }
+      .nav-links a:not(.active) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="sparkle-canvas"></canvas>
+
+<div id="page-content">
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <div class="logo-icon"><svg class="wand-svg" width="18" height="18" viewBox="0 0 24 24"><path d="M15 4l-1 1 4 4 1-1a2.83 2.83 0 0 0-4-4z" fill="#09090b" stroke="none"/><path d="M14 5L3 16v4h4L18 9" stroke="#09090b" fill="none"/><circle cx="19" cy="3" r="1" fill="#09090b" opacity="0.4"/><circle cx="21" cy="6" r="0.6" fill="#09090b" opacity="0.3"/><circle cx="16.5" cy="1.5" r="0.5" fill="#09090b" opacity="0.25"/></svg></div>
+      Zauberstab
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="browse.html" class="active">Ideen</a>
+      <a href="verzaubern.html">Verzaubern</a>
+      <a href="index.html#pricing">Preise</a>
+      <span id="nav-auth"><button class="btn btn-primary" onclick="location.href='index.html#waitlist'">Kostenlos starten</button></span>
+    </div>
+  </div>
+</nav>
+
+<div class="page-header">
+  <h1>Ideen-Datenbank</h1>
+  <p>Validierte Startup-Ideen für den DACH-Markt — täglich eine neue.</p>
+</div>
+
+<div class="controls" id="controls">
+  <input type="text" class="search-box" id="searchBox" placeholder="Idee suchen...">
+  <div id="filterBtns"></div>
+  <select class="sort-select" id="sortSelect">
+    <option value="score-desc">Score ↓</option>
+    <option value="score-asc">Score ↑</option>
+    <option value="date-desc">Neueste zuerst</option>
+    <option value="date-asc">Älteste zuerst</option>
+    <option value="name-asc">Name A–Z</option>
+  </select>
+</div>
+
+<div class="stats-bar">
+  <span id="resultCount"></span>
+  <span id="avgScore"></span>
+</div>
+
+<div class="ideas-grid" id="ideasGrid"></div>
+
+<script>
+let allIdeas = [{"file":"2026-02-24_ki-steuerberater-freelancer.json","slug":"2026-02-24_ki-steuerberater-freelancer","date":"24. Feb 2026","name":"TaxMate","kategorie":"FinTech","einzeiler":"KI-Steuerassistent, der Freelancern in der DACH-Region automatisch EÜR und Steuererklärungen erstellt","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-02-25_automatische-buchhaltung-kleinunternehmer.json","slug":"2026-02-25_automatische-buchhaltung-kleinunternehmer","date":"25. Feb 2026","name":"BuchungsBlitz","kategorie":"SaaS / B2B","einzeiler":"Automatische Buchhaltung für Kleinunternehmer — Belege scannen, kategorisieren, GoBD-konform verbuchen","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-02-26_krypto-steuererklaerung-deutschland.json","slug":"2026-02-26_krypto-steuererklaerung-deutschland","date":"26. Feb 2026","name":"CoinSteuer","kategorie":"FinTech","einzeiler":"Krypto-Steuererklärung für Deutschland — Portfolio-Import, Haltefrist-Tracking, FIFO-Berechnung, ELSTER-Export","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-02-27_rechnungsstellung-ki.json","slug":"2026-02-27_rechnungsstellung-ki","date":"27. Feb 2026","name":"RechnungsFix","kategorie":"SaaS / B2B","einzeiler":"Smarte Rechnungsstellung für Solopreneure — Angebote, Rechnungen, Mahnwesen in unter 60 Sekunden","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-02-28_nachhaltigkeits-tracker-kmu.json","slug":"2026-02-28_nachhaltigkeits-tracker-kmu","date":"28. Feb 2026","name":"GreenScore","kategorie":"GreenTech / Nachhaltigkeit","einzeiler":"ESG-Nachhaltigkeits-Tracker für KMU — CO2-Fußabdruck messen, Berichte erstellen, Förderungen finden","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-01_co2-fussabdruck-app.json","slug":"2026-03-01_co2-fussabdruck-app","date":"01. Mar 2026","name":"FootprintApp","kategorie":"GreenTech / Nachhaltigkeit","einzeiler":"Persönlicher CO2-Rechner mit Gamification — tracke deinen Alltag, erhalte Tipps, vergleiche mit anderen","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-02_energieverbrauch-optimieren-unternehmen.json","slug":"2026-03-02_energieverbrauch-optimieren-unternehmen","date":"02. Mar 2026","name":"EnergieOptima","kategorie":"GreenTech / Nachhaltigkeit","einzeiler":"Energieverbrauchs-Optimierung für Betriebe — Sensordaten analysieren, Sparpotenziale finden, automatisch steuern","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-03_ki-meal-prep-planer.json","slug":"2026-03-03_ki-meal-prep-planer","date":"03. Mar 2026","name":"MealGenie","kategorie":"E-Commerce / D2C","einzeiler":"KI-Meal-Prep-Planer für Familien — Wochenpläne, Einkaufslisten, Nährwerte, auf deutsche Supermärkte abgestimmt","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-04_handwerker-crm.json","slug":"2026-03-04_handwerker-crm","date":"04. Mar 2026","name":"HandwerkHero","kategorie":"SaaS / B2B","einzeiler":"CRM-System für Handwerksbetriebe mit automatisierter Terminplanung, Rechnungsstellung und Kundenverwaltung nach GoBD-Standard","score":6.7,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":9,"machbarkeit":7,"umsatzpotenzial":7}},{"file":"2026-03-04_regionale-lebensmittel-lieferung.json","slug":"2026-03-04_regionale-lebensmittel-lieferung","date":"04. Mar 2026","name":"HofDirekt","kategorie":"E-Commerce / D2C","einzeiler":"Regionale Lebensmittel direkt vom Bauernhof — Abo-Box mit Hofprodukten aus deiner Region","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-05_food-waste-reduktion-gastronomie.json","slug":"2026-03-05_food-waste-reduktion-gastronomie","date":"05. Mar 2026","name":"RestePlaner","kategorie":"SaaS / B2B","einzeiler":"Food-Waste-Lösung für die Gastronomie — Bestandsprognosen, Resteverwertungs-Rezepte, Spendenlogistik","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-05_mietrechts-assistent.json","slug":"2026-03-05_mietrechts-assistent","date":"05. Mar 2026","name":"MieterSchutz","kategorie":"SaaS / B2B","einzeiler":"KI-Chatbot für Mietrecht: Mietpreisbremse-Checks, Nebenkostenabrechnung, Mängelbeseitigung automatisch auf Basis aktueller DSGVO und deutschem Mietrecht","score":6.2,"scores":{"suchvolumen":7,"wachstum":3,"schmerzlevel":8,"machbarkeit":6,"umsatzpotenzial":6}},{"file":"2026-03-06_gastro-management.json","slug":"2026-03-06_gastro-management","date":"06. Mar 2026","name":"GastroFlow","kategorie":"SaaS / B2B","einzeiler":"All-in-One Betriebssystem für Restaurants: digitale Bestellverwaltung, Lieferantenverwaltung, Lagerhaltung und Mitarbeiterschichtplanung mit GoBD-konformer Kassenbindung","score":5.8,"scores":{"suchvolumen":5,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-06_ki-bewerbung-schreiben.json","slug":"2026-03-06_ki-bewerbung-schreiben","date":"06. Mar 2026","name":"BewerberPro","kategorie":"SaaS / B2B","einzeiler":"KI-Bewerbungsassistent für den DACH-Arbeitsmarkt — Anschreiben, Lebenslauf, DIN-5008-konform","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-07_freelancer-matching-plattform-dach.json","slug":"2026-03-07_freelancer-matching-plattform-dach","date":"07. Mar 2026","name":"FreelanceHub","kategorie":"Marketplace / Plattform","einzeiler":"Freelancer-Matching für den DACH-Raum — KI-basiertes Matching nach Skills, Verfügbarkeit und Branche","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-07_kita-matching.json","slug":"2026-03-07_kita-matching","date":"07. Mar 2026","name":"KitaPlatz.io","kategorie":"Marketplace / Plattform","einzeiler":"Online-Matching-Plattform für verfügbare Kitaplätze: Eltern finden verfügbare Plätze in ihrer Region","score":6,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-08_baustelle-dokumentation.json","slug":"2026-03-08_baustelle-dokumentation","date":"08. Mar 2026","name":"BauDoku Pro","kategorie":"SaaS / B2B","einzeiler":"Cloud-basierte Baustellendokumentation mit Mängelmanagement, Foto-Markierung und digitale Abnahmeprotokolle","score":6,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-08_remote-team-management-tool.json","slug":"2026-03-08_remote-team-management-tool","date":"08. Mar 2026","name":"TeamPilot","kategorie":"SaaS / B2B","einzeiler":"Remote-Team-Management für DACH-Unternehmen — Zeiterfassung, Stimmungsbarometer, asynchrone Stand-ups","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-09_finanzplanung-selbststaendige.json","slug":"2026-03-09_finanzplanung-selbststaendige","date":"09. Mar 2026","name":"Finanzpilot","kategorie":"FinTech","einzeiler":"KI-gestützte Finanzplanung für Selbstständige: automatische EÜR, Steuern-Optimierung","score":6,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-09_recommerce-plattform-deutschland.json","slug":"2026-03-09_recommerce-plattform-deutschland","date":"09. Mar 2026","name":"ZweiteChance","kategorie":"Marketplace / Plattform","einzeiler":"Recommerce-Plattform für Markenprodukte — geprüfte Retouren und B-Ware mit Garantie weiterverkaufen","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-10_ki-produktbeschreibungen.json","slug":"2026-03-10_ki-produktbeschreibungen","date":"10. Mar 2026","name":"TextForge","kategorie":"SaaS / B2B","einzeiler":"KI-Produkttexte für deutsche Onlineshops — SEO-optimiert, markenkonform, für Amazon, Shopify, Otto","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-10_pflegekraefte-vermittlung.json","slug":"2026-03-10_pflegekraefte-vermittlung","date":"10. Mar 2026","name":"PflegeConnect","kategorie":"Marketplace / Plattform","einzeiler":"Matching-Plattform für Pflegekräfte und Arbeitgeber: digitale Vermittlung mit Zeugnis-Verifizierung","score":6,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-11_dropshipping-alternative-dach.json","slug":"2026-03-11_dropshipping-alternative-dach","date":"11. Mar 2026","name":"EigenMarke","kategorie":"E-Commerce / D2C","einzeiler":"Private-Label-Plattform als Dropshipping-Alternative — eigene Produkte mit DACH-Lieferanten aufbauen","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-11_hyperlocal-nachbarschaft.json","slug":"2026-03-11_hyperlocal-nachbarschaft","date":"11. Mar 2026","name":"NachbarMarkt","kategorie":"Marketplace / Plattform","einzeiler":"Hyperlocal Nachbarschafts-Marktplatz: Gebrauchtkauf/Verkauf, Nachbarschaftshilfe, Kleinanzeigen","score":6,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-12_ki-lernassistent.json","slug":"2026-03-12_ki-lernassistent","date":"12. Mar 2026","name":"StudyBuddy DE","kategorie":"EdTech","einzeiler":"KI-Lernassistent speziell für deutsche Unis: Klausurvorbereitung, Vorlesungs-Notiz-Verarbeitung","score":6,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-12_mentale-gesundheit-app-deutsch.json","slug":"2026-03-12_mentale-gesundheit-app-deutsch","date":"12. Mar 2026","name":"SeelenBalance","kategorie":"HealthTech / Wellness","einzeiler":"Mentale Gesundheit App auf Deutsch — KI-Coaching, Stimmungstagebuch, Therapeuten-Vermittlung","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-13_ki-arzttermin-buchung.json","slug":"2026-03-13_ki-arzttermin-buchung","date":"13. Mar 2026","name":"DocEasy","kategorie":"HealthTech / Wellness","einzeiler":"Arzttermin-Buchung ohne Wartezeit — freie Termine finden, online buchen, Erinnerungen, Befunde digital","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-13_oekostrom-vergleich-wechsel.json","slug":"2026-03-13_oekostrom-vergleich-wechsel","date":"13. Mar 2026","name":"GrünStrom Vergleich","kategorie":"FinTech","einzeiler":"Dynamischer Ökostrom-Vergleichs-Service: Automatische Tarifoptimierung, Wechsel-Verwaltung","score":6.2,"scores":{"suchvolumen":6,"wachstum":4,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-14_betriebliches-gesundheitsmanagement-saas.json","slug":"2026-03-14_betriebliches-gesundheitsmanagement-saas","date":"14. Mar 2026","name":"VitalWork","kategorie":"HealthTech / Wellness","einzeiler":"Betriebliches Gesundheitsmanagement als SaaS — Mitarbeitergesundheit messen, Maßnahmen planen, ROI tracken","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-14_nachlassplanung-digital.json","slug":"2026-03-14_nachlassplanung-digital","date":"14. Mar 2026","name":"Erbenberater","kategorie":"FinTech","einzeiler":"Digitale Nachlassplanung: Testament-Builder, Erbschaftssteuer-Rechner, Vermögensverzeichnis mit rechtlicher Überprüfung","score":6,"scores":{"suchvolumen":6,"wachstum":3,"schmerzlevel":8,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-15_immobilienbewertung-ki.json","slug":"2026-03-15_immobilienbewertung-ki","date":"15. Mar 2026","name":"WertCheck","kategorie":"PropTech / Immobilien","einzeiler":"Sofort-Immobilienbewertung für Eigentümer — Vergleichswerte, Markttrends, Verkaufspreis-Empfehlung","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-15_kfz-werkstatt-management.json","slug":"2026-03-15_kfz-werkstatt-management","date":"15. Mar 2026","name":"WerkstattDigital","kategorie":"SaaS / B2B","einzeiler":"Komplettes Werkstatt-Management für Kfz-Betriebe: Terminverwaltung, Reparaturhistorie, TÜV/HU-Integration, Ersatzteil-Verwaltung","score":6,"scores":{"suchvolumen":5,"wachstum":3,"schmerzlevel":7,"machbarkeit":7,"umsatzpotenzial":7}},{"file":"2026-03-16_freelancer-komplettloesung.json","slug":"2026-03-16_freelancer-komplettloesung","date":"16. Mar 2026","name":"FreelanceOS DACH","kategorie":"SaaS / B2B","einzeiler":"Komplettlösung für Freelancer und Solo-Selbstständige: Rechnungstellung, Verträge, Timetracking, Scheinselbständigkeits-Checker (Fake-Employee Detector)","score":6.7,"scores":{"suchvolumen":6,"wachstum":4,"schmerzlevel":8,"machbarkeit":7,"umsatzpotenzial":7}},{"file":"2026-03-16_nebenkostenabrechnung-automatisieren.json","slug":"2026-03-16_nebenkostenabrechnung-automatisieren","date":"16. Mar 2026","name":"NebenCheck","kategorie":"PropTech / Immobilien","einzeiler":"Nebenkostenabrechnung automatisch prüfen — Fehler finden, Widerspruch generieren, Geld zurückholen","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-17_food-waste-marketplace.json","slug":"2026-03-17_food-waste-marketplace","date":"17. Mar 2026","name":"LebensmittelRetter","kategorie":"E-Commerce / D2C","einzeiler":"B2B Food Waste Marketplace: Überschüssige Lebensmittel von Produzenten direkt an Restaurants/Hotels/Geschäfte verkaufen – Nachhaltig & günstiger","score":6.3,"scores":{"suchvolumen":5,"wachstum":5,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-17_wg-verwaltung-app.json","slug":"2026-03-17_wg-verwaltung-app","date":"17. Mar 2026","name":"WGPilot","kategorie":"SaaS / B2B","einzeiler":"WG-Verwaltung leicht gemacht — Kosten teilen, Putzplan, Einkaufslisten, gemeinsame Kasse","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-18_immobilien-bewertung-ai.json","slug":"2026-03-18_immobilien-bewertung-ai","date":"18. Mar 2026","name":"ImmoPilot","kategorie":"PropTech / Immobilien","einzeiler":"KI-basierte Immobilienbewertung für Privatverkäufer: Automatische Wertschätzung, Vergleichswerte, Gutachten-Alternative (unter 50€ statt 1000€+)","score":6.5,"scores":{"suchvolumen":6,"wachstum":4,"schmerzlevel":8,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-18_ki-nachhilfe-plattform.json","slug":"2026-03-18_ki-nachhilfe-plattform","date":"18. Mar 2026","name":"LernHero","kategorie":"EdTech","einzeiler":"KI-Nachhilfe für Schüler — personalisierte Erklärungen, Übungen nach Lehrplan, Prüfungsvorbereitung","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-19_deutsch-sprachkurse-fachkraefte.json","slug":"2026-03-19_deutsch-sprachkurse-fachkraefte","date":"19. Mar 2026","name":"SprachBrücke","kategorie":"EdTech","einzeiler":"KI-Sprachkurse speziell für Fachkräfte: Deutsch B2+ mit Fachbereichs-Vokabular (Handwerk, Pflege, Tech) – Integration für schnelleres Arbeitsmarkt-Eintritt","score":6.3,"scores":{"suchvolumen":5,"wachstum":6,"schmerzlevel":8,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-19_weiterbildung-kmu-mitarbeiter.json","slug":"2026-03-19_weiterbildung-kmu-mitarbeiter","date":"19. Mar 2026","name":"SkillUp.de","kategorie":"EdTech","einzeiler":"Weiterbildungs-Plattform für KMU — Kursempfehlungen nach Jobrolle, Zertifikate, Bildungsprämie-kompatibel","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-20_online-apotheke-beratung.json","slug":"2026-03-20_online-apotheke-beratung","date":"20. Mar 2026","name":"ApothekeOnline","kategorie":"HealthTech / Wellness","einzeiler":"Digitale Apotheke mit Pharmazist-Chatbot-Beratung: Rezepte einreichen, Medikamente bestellen, Beratung von echten Apothekern","score":6,"scores":{"suchvolumen":6,"wachstum":4,"schmerzlevel":7,"machbarkeit":5,"umsatzpotenzial":9}},{"file":"2026-03-20_sprachkurs-ki-personalisiert.json","slug":"2026-03-20_sprachkurs-ki-personalisiert","date":"20. Mar 2026","name":"SprechFit","kategorie":"EdTech","einzeiler":"Personalisierter KI-Sprachkurs — Aussprache-Training, Business-Deutsch, auf dein Niveau angepasst","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-21_umsatzsteuer-automation.json","slug":"2026-03-21_umsatzsteuer-automation","date":"21. Mar 2026","name":"SteuerBot Pro","kategorie":"FinTech","einzeiler":"Automatisierung der Umsatzsteuer-Abrechnung für E-Commerce: OSS-Meldungen, Reverse Charge automatisch, One-Click-Compliance","score":7,"scores":{"suchvolumen":5,"wachstum":6,"schmerzlevel":9,"machbarkeit":7,"umsatzpotenzial":8}},{"file":"2026-03-21_vertragsanalyse-ki-deutsch.json","slug":"2026-03-21_vertragsanalyse-ki-deutsch","date":"21. Mar 2026","name":"VertragsCheck","kategorie":"SaaS / B2B","einzeiler":"KI-Vertragsanalyse auf Deutsch — AGBs verstehen, Klauseln prüfen, Risiken markieren in Sekunden","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-22_bio-gemueseabo-personalisiert.json","slug":"2026-03-22_bio-gemueseabo-personalisiert","date":"22. Mar 2026","name":"GemüseKiste 2.0","kategorie":"E-Commerce / D2C","einzeiler":"Personalisierte Bio-Gemüse-Abo-Box mit KI-Rezept-Integration: Liefert basierend auf Ernährungspräferenzen, mit Rezepten und Nährwerk-Info","score":6,"scores":{"suchvolumen":5,"wachstum":5,"schmerzlevel":6,"machbarkeit":6,"umsatzpotenzial":6}},{"file":"2026-03-22_datenschutz-compliance-tool.json","slug":"2026-03-22_datenschutz-compliance-tool","date":"22. Mar 2026","name":"DatenSchild","kategorie":"SaaS / B2B","einzeiler":"DSGVO-Compliance-Tool für KMU — Verarbeitungsverzeichnis, Datenschutzerklärung, Audit-Checklisten","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-23_mietrecht-chatbot.json","slug":"2026-03-23_mietrecht-chatbot","date":"23. Mar 2026","name":"MietRecht24","kategorie":"SaaS / B2B","einzeiler":"Mietrecht-Chatbot für Mieter — Mietpreisbremse prüfen, Mängel melden, Musterschreiben generieren","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-23_virtuelle-assistenz-kmu.json","slug":"2026-03-23_virtuelle-assistenz-kmu","date":"23. Mar 2026","name":"BüroHeld","kategorie":"SaaS / B2B","einzeiler":"Virtuelle Assistenz Plattform für KMU: Intelligente Task-Automation, Admin-Support von Remote-Teams mit Deutsch-Fokus","score":5.8,"scores":{"suchvolumen":4,"wachstum":4,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-24_handwerker-plattform-ki-matching.json","slug":"2026-03-24_handwerker-plattform-ki-matching","date":"24. Mar 2026","name":"MeisterMatch","kategorie":"Marketplace / Plattform","einzeiler":"Handwerker-Vermittlung per KI-Matching — den richtigen Handwerker für dein Projekt in deiner Region","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-24_mietpreis-analyse-tool.json","slug":"2026-03-24_mietpreis-analyse-tool","date":"24. Mar 2026","name":"MietenCheck","kategorie":"PropTech / Immobilien","einzeiler":"Mietpreis-Analyse-Tool & Verhandlungs-Assistent: Mietspiegel-Vergleich, Marktanalyse, Verhandlungs-Tipps für Mietschützer","score":5.7,"scores":{"suchvolumen":5,"wachstum":3,"schmerzlevel":7,"machbarkeit":7,"umsatzpotenzial":5}},{"file":"2026-03-25_angebotserstellung-automatisieren-handwerk.json","slug":"2026-03-25_angebotserstellung-automatisieren-handwerk","date":"25. Mar 2026","name":"AngebotsBlitz","kategorie":"SaaS / B2B","einzeiler":"Angebotserstellung für Handwerker in Minuten — Aufmaß eingeben, Materialkosten berechnen, PDF versenden","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-25_nachhaltige-gebaeude-tech.json","slug":"2026-03-25_nachhaltige-gebaeude-tech","date":"25. Mar 2026","name":"CleanTech Match","kategorie":"GreenTech / Nachhaltigkeit","einzeiler":"Marketplace für nachhaltige Gebäudetechnik: Vermittlung von Energiespar-Lösungen (Solaranlagen, Wärmepumpen) an Privathaus und Gewerbe","score":6.5,"scores":{"suchvolumen":5,"wachstum":6,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-26_ausbildung-management-ai.json","slug":"2026-03-26_ausbildung-management-ai","date":"26. Mar 2026","name":"Azubi.ai","kategorie":"EdTech","einzeiler":"KI-Ausbildungsmanager für Betriebe: Berichtsheft-Automation, IHK-Dokumentation, Ausbildungsplan-Tracking mit digitalen Berichtsheften","score":5.7,"scores":{"suchvolumen":4,"wachstum":4,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":6}},{"file":"2026-03-26_baustellendokumentation-app.json","slug":"2026-03-26_baustellendokumentation-app","date":"26. Mar 2026","name":"BauSnap","kategorie":"SaaS / B2B","einzeiler":"Baustellendokumentation per Smartphone — Fotos, Zeitstempel, Mängelprotokoll, automatischer Bericht","score":6.8,"scores":{"suchvolumen":7,"wachstum":8,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":8}},{"file":"2026-03-27_praxismanagement-aerzte.json","slug":"2026-03-27_praxismanagement-aerzte","date":"27. Mar 2026","name":"PraxisFlow","kategorie":"HealthTech / Wellness","einzeiler":"Praxismanagement für Ärzte & Therapeuten: Patientenverwaltung, Terminplanung, Abrechnungs-Integration nach KBV-Standard","score":5.5,"scores":{"suchvolumen":4,"wachstum":3,"schmerzlevel":7,"machbarkeit":6,"umsatzpotenzial":7}},{"file":"2026-03-28_co2-bilanzierung-kmu.json","slug":"2026-03-28_co2-bilanzierung-kmu","date":"28. Mar 2026","name":"KlimaBilanz","kategorie":"GreenTech / Nachhaltigkeit","einzeiler":"CO2-Bilanzierung für KMU nach CSRD: Automatische Erfassung von Emissionen, Reports für Compliance und Sustainability-Marketing","score":6.5,"scores":{"suchvolumen":4,"wachstum":8,"schmerzlevel":8,"machbarkeit":6,"umsatzpotenzial":7}}];
+let activeFilter = 'Alle';
+
+function loadIdeas() {
+  buildFilters();
+  renderIdeas();
+}
+
+function buildFilters() {
+  const cats = new Map();
+  cats.set('Alle', allIdeas.length);
+  allIdeas.forEach(i => {
+    cats.set(i.kategorie, (cats.get(i.kategorie) || 0) + 1);
+  });
+
+  const container = document.getElementById('filterBtns');
+  container.style.display = 'flex';
+  container.style.gap = '6px';
+  container.style.flexWrap = 'wrap';
+
+  cats.forEach((count, cat) => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (cat === 'Alle' ? ' active' : '');
+    btn.textContent = cat + ' (' + count + ')';
+    btn.onclick = () => {
+      activeFilter = cat;
+      container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderIdeas();
+    };
+    container.appendChild(btn);
+  });
+}
+
+function getScoreClass(score) {
+  if (score >= 7) return 'high';
+  if (score >= 5) return 'mid';
+  return 'low';
+}
+
+function renderIdeas() {
+  const search = document.getElementById('searchBox').value.toLowerCase().trim();
+  const sort = document.getElementById('sortSelect').value;
+
+  let filtered = allIdeas.filter(i => {
+    if (activeFilter !== 'Alle' && i.kategorie !== activeFilter) return false;
+    if (search && !i.name.toLowerCase().includes(search) && !i.einzeiler.toLowerCase().includes(search) && !i.kategorie.toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  // Sort
+  filtered.sort((a, b) => {
+    switch (sort) {
+      case 'score-desc': return b.score - a.score;
+      case 'score-asc': return a.score - b.score;
+      case 'date-desc': return b.file.localeCompare(a.file);
+      case 'date-asc': return a.file.localeCompare(b.file);
+      case 'name-asc': return a.name.localeCompare(b.name);
+      default: return 0;
+    }
+  });
+
+  // Stats
+  document.getElementById('resultCount').textContent = filtered.length + ' Idee' + (filtered.length !== 1 ? 'n' : '');
+  if (filtered.length > 0) {
+    const avg = (filtered.reduce((sum, i) => sum + i.score, 0) / filtered.length).toFixed(1);
+    document.getElementById('avgScore').textContent = 'Ø Score: ' + avg;
+  } else {
+    document.getElementById('avgScore').textContent = '';
+  }
+
+  const grid = document.getElementById('ideasGrid');
+
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state"><p>Keine Ideen gefunden. Versuche einen anderen Suchbegriff.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = filtered.map(idea => {
+    const sc = getScoreClass(idea.score);
+    const scoreKeys = ['suchvolumen', 'wachstum', 'schmerzlevel', 'machbarkeit', 'umsatzpotenzial'];
+    const bars = scoreKeys.map(k => {
+      const v = idea.scores[k] || 5;
+      const h = Math.max(4, v * 2);
+      const cls = v >= 7 ? 'high' : v >= 5 ? 'mid' : 'low';
+      return '<div class="idea-card-bar ' + cls + '" style="height:' + h + 'px" title="' + k + ': ' + v + '"></div>';
+    }).join('');
+
+    return '<div class="idea-card" onclick="location.href=\'idee.html?id=' + idea.slug + '\'">' +
+      '<div class="idea-card-top">' +
+        '<span class="idea-card-category">' + idea.kategorie + '</span>' +
+        '<div class="idea-card-score score-' + sc + '">' + idea.score + '</div>' +
+      '</div>' +
+      '<h3>' + idea.name + '</h3>' +
+      '<div class="idea-card-desc">' + idea.einzeiler + '</div>' +
+      '<div class="idea-card-meta">' +
+        '<span class="idea-card-date">' + idea.date + '</span>' +
+        '<div class="idea-card-bars">' + bars + '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+document.getElementById('searchBox').addEventListener('input', renderIdeas);
+document.getElementById('sortSelect').addEventListener('change', renderIdeas);
+
+loadIdeas();
+
+// ── Wand hover sparks (logo) ──
+(function() {
+  const logoIcon = document.querySelector('.logo-icon');
+  if (!logoIcon) return;
+  let sparkInterval = null;
+
+  function emitSpark() {
+    const spark = document.createElement('div');
+    spark.className = 'logo-spark';
+    spark.style.left = (8 + Math.random() * 4) + 'px';
+    spark.style.top = (20 + Math.random() * 4) + 'px';
+    spark.style.width = (1.5 + Math.random() * 2) + 'px';
+    spark.style.height = spark.style.width;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 15 + Math.random() * 10;
+    const dx = Math.cos(angle) * speed;
+    const dy = Math.sin(angle) * speed;
+    logoIcon.appendChild(spark);
+    spark.animate([
+      { opacity: 0.9, transform: 'translate(0,0) scale(1)', offset: 0 },
+      { opacity: 0.6, transform: 'translate(' + dx*0.4 + 'px,' + dy*0.4 + 'px) scale(1.1)', offset: 0.3 },
+      { opacity: 0, transform: 'translate(' + dx + 'px,' + dy + 'px) scale(0)', offset: 1 }
+    ], { duration: 400 + Math.random() * 300, easing: 'cubic-bezier(0.2,0,0.38,0.9)', fill: 'forwards' }).onfinish = () => spark.remove();
+  }
+
+  logoIcon.addEventListener('mouseenter', () => {
+    for (let i = 0; i < 5; i++) setTimeout(() => emitSpark(), i * 40);
+    sparkInterval = setInterval(emitSpark, 80);
+  });
+  logoIcon.addEventListener('mouseleave', () => { clearInterval(sparkInterval); });
+})();
+
+// ── Sparkle background ──
+(function() {
+  const canvas = document.getElementById('sparkle-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+  const COUNT = 50;
+  const spawnPoints = [];
+  for (let i = 0; i < 8; i++) spawnPoints.push({ x: Math.random() * 1920, y: Math.random() * 1080 });
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    spawnPoints.forEach(sp => { sp.x = Math.random() * w; sp.y = Math.random() * h; });
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Spark {
+    constructor() { this.reset(true); }
+    reset(init) {
+      const sp = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
+      this.x = sp.x + (Math.random() - 0.5) * 200;
+      this.y = sp.y + (Math.random() - 0.5) * 200;
+      const a = Math.random() * Math.PI * 2;
+      const s = 0.08 + Math.random() * 0.3;
+      this.vx = Math.cos(a) * s; this.vy = Math.sin(a) * s;
+      this.friction = 0.997 + Math.random() * 0.002;
+      this.gravity = 0.0005 + Math.random() * 0.001;
+      this.size = 0.4 + Math.random() * 1.2;
+      this.opacity = 0;
+      this.maxOpacity = 0.15 + Math.random() * 0.3;
+      this.life = 0;
+      this.maxLife = 200 + Math.random() * 400;
+      this.twinkle = 0.03 + Math.random() * 0.06;
+      this.phase = Math.random() * Math.PI * 2;
+    }
+    update() {
+      this.life++;
+      this.vx *= this.friction; this.vy *= this.friction; this.vy += this.gravity;
+      this.x += this.vx; this.y += this.vy;
+      const fi = this.maxLife * 0.25, fo = this.maxLife * 0.4;
+      if (this.life < fi) this.opacity = (this.life / fi) * this.maxOpacity;
+      else if (this.life > this.maxLife - fo) this.opacity = ((this.maxLife - this.life) / fo) * this.maxOpacity;
+      else this.opacity = this.maxOpacity;
+      this.opacity *= 0.7 + 0.3 * Math.sin(this.life * this.twinkle + this.phase);
+      if (this.life >= this.maxLife) this.reset(false);
+    }
+    draw() {
+      ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,' + this.opacity + ')'; ctx.fill();
+      if (this.opacity > 0.12) {
+        ctx.beginPath(); ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(250,250,250,' + (this.opacity * 0.06) + ')'; ctx.fill();
+      }
+      if (this.opacity > 0.2 && this.size > 0.9) {
+        const l = this.size * 2.5;
+        ctx.strokeStyle = 'rgba(255,255,255,' + (this.opacity * 0.25) + ')'; ctx.lineWidth = 0.5;
+        ctx.beginPath(); ctx.moveTo(this.x-l, this.y); ctx.lineTo(this.x+l, this.y);
+        ctx.moveTo(this.x, this.y-l); ctx.lineTo(this.x, this.y+l); ctx.stroke();
+      }
+    }
+  }
+
+  for (let i = 0; i < COUNT; i++) particles.push(new Spark());
+  let fc = 0;
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => { p.update(); p.draw(); });
+    fc++; if (fc % 60 === 0) spawnPoints.forEach(sp => { sp.x += (Math.random()-0.5)*2; sp.y += (Math.random()-0.5)*2; });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+</script>
+
+</div>
+<script src="auth.js"></script>
+</body>
+</html>

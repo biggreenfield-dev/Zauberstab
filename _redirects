@@ -1,0 +1,2 @@
+# Netlify redirects (Alternative zu netlify.toml)
+/idee/*  /idee.html  200
