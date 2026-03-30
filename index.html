@@ -162,7 +162,7 @@
     #wandCanvas { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 100%; }
 
     /* Sparks canvas — sticky at wand tip */
-    #journeySparks { position: sticky; top: calc(50vh - 40px); left: 50%; transform: translateX(-50%); width: 160px; height: 160px; pointer-events: none; z-index: 7; margin-left: -50px; }
+    #journeySparks { position: sticky; top: calc(50vh - 80px); left: 50%; transform: translateX(-50%); width: 160px; height: 160px; pointer-events: none; z-index: 7; margin-left: calc(50% - 80px); }
 
     /* Dream Grid */
     .journey-step-grid { min-height: auto; padding: 80px 0; align-items: flex-start; }
@@ -340,7 +340,6 @@
         </div>
         <div class="journey-step-overlay"></div>
         <div class="journey-step-content left">
-          <div class="journey-step-num">Schritt 01</div>
           <h3>Finde deine Idee und baue sie mit Zauberstab</h3>
           <p>Aus Tausenden von Datenpunkten destilliert Zauberstab die eine Idee, die zu dir passt — validiert, bewertet und mit konkretem Fahrplan.</p>
         </div>
@@ -353,7 +352,6 @@
         </div>
         <div class="journey-step-overlay"></div>
         <div class="journey-step-content right">
-          <div class="journey-step-num">Schritt 02</div>
           <h3>Arbeite von wo und wie du möchtest — sei frei</h3>
           <p>Ob Balkon mit Skyline-Blick, Café in Lissabon oder Home-Office — dein Business passt sich deinem Leben an, nicht umgekehrt.</p>
         </div>
@@ -363,18 +361,17 @@
       <div class="journey-step journey-step-grid" data-step="3">
         <div class="journey-step-overlay" style="background:linear-gradient(to bottom, var(--bg) 0%, rgba(9,9,11,0.85) 15%, rgba(9,9,11,0.7) 50%, rgba(9,9,11,0.85) 85%, var(--bg) 100%);"></div>
         <div class="journey-step-content" style="padding:0 24px; text-align:center; position:relative; z-index:3;">
-          <div class="journey-step-num">Schritt 03</div>
           <h3 style="max-width:600px; margin:0 auto 40px;">Verwirkliche dir deine Träume</h3>
           <!-- 2x4 Video Grid -->
           <div class="dream-grid" id="dreamGrid">
-            <div class="dream-cell" data-delay="0"><video autoplay muted loop playsinline src="grid1.mp4"></video></div>
-            <div class="dream-cell" data-delay="150"><video autoplay muted loop playsinline src="grid2.mp4"></video></div>
-            <div class="dream-cell" data-delay="300"><video autoplay muted loop playsinline src="grid3.mp4"></video></div>
-            <div class="dream-cell" data-delay="100"><video autoplay muted loop playsinline src="grid4.mp4"></video></div>
-            <div class="dream-cell" data-delay="250"><video autoplay muted loop playsinline src="grid5.mp4"></video></div>
-            <div class="dream-cell" data-delay="50"><video autoplay muted loop playsinline src="grid6.mp4"></video></div>
-            <div class="dream-cell" data-delay="200"><video autoplay muted loop playsinline src="grid7.mp4"></video></div>
-            <div class="dream-cell" data-delay="350"><video autoplay muted loop playsinline src="grid8.mp4"></video></div>
+            <div class="dream-cell" data-delay="0"><video muted loop playsinline data-src="grid1.mp4"></video></div>
+            <div class="dream-cell" data-delay="150"><video muted loop playsinline data-src="grid2.mp4"></video></div>
+            <div class="dream-cell" data-delay="300"><video muted loop playsinline data-src="grid3.mp4"></video></div>
+            <div class="dream-cell" data-delay="100"><video muted loop playsinline data-src="grid4.mp4"></video></div>
+            <div class="dream-cell" data-delay="250"><video muted loop playsinline data-src="grid5.mp4"></video></div>
+            <div class="dream-cell" data-delay="50"><video muted loop playsinline data-src="grid6.mp4"></video></div>
+            <div class="dream-cell" data-delay="200"><video muted loop playsinline data-src="grid7.mp4"></video></div>
+            <div class="dream-cell" data-delay="350"><video muted loop playsinline data-src="grid8.mp4"></video></div>
           </div>
           <p style="color:rgba(255,255,255,0.5); max-width:500px; margin:32px auto 0; text-shadow:0 1px 15px rgba(0,0,0,0.5);">Zauberstab ist der Anfang. Wohin die Reise geht, bestimmst du.</p>
         </div>
@@ -1039,7 +1036,7 @@
     onScroll();
   })();
 
-  // ── Dream Grid Reveal Animation ──
+  // ── Dream Grid: Lazy Load + Staggered Reveal ──
   (function() {
     const grid = document.getElementById('dreamGrid');
     if (!grid) return;
@@ -1051,12 +1048,21 @@
         if (entry.isIntersecting && !revealed) {
           revealed = true;
           cells.forEach((cell, i) => {
-            const delay = parseInt(cell.dataset.delay || 0) + i * 120;
-            setTimeout(() => cell.classList.add('visible'), delay);
+            const delay = parseInt(cell.dataset.delay || 0) + i * 150;
+            setTimeout(() => {
+              // Lazy load: set src and play
+              const video = cell.querySelector('video');
+              if (video && video.dataset.src) {
+                video.src = video.dataset.src;
+                video.load();
+                video.play().catch(() => {});
+              }
+              cell.classList.add('visible');
+            }, delay);
           });
         }
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.15 });
 
     gridObserver.observe(grid);
   })();
