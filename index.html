@@ -156,10 +156,10 @@
     .journey-step-content.right p { margin-left: auto; }
 
     /* Wand as growing timeline */
-    .journey-wand-track { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; z-index: 6; pointer-events: none; }
+    .journey-wand-track { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; z-index: 6; pointer-events: none; }
 
-    /* The wand body — SVG drawn by JS via canvas */
-    #wandCanvas { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 100%; }
+    /* The wand body — drawn by JS via canvas */
+    #wandCanvas { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 100%; }
 
     /* Sparks canvas — sticky at wand tip */
     #journeySparks { position: sticky; top: calc(50vh - 40px); left: 50%; transform: translateX(-50%); width: 160px; height: 160px; pointer-events: none; z-index: 7; margin-left: -50px; }
@@ -788,87 +788,144 @@
     // Resize wand canvas to match container
     function resizeWand() {
       const rect = container.getBoundingClientRect();
-      wandCanvas.width = 60;
+      wandCanvas.width = 80;
       wandCanvas.height = container.scrollHeight;
     }
     resizeWand();
     window.addEventListener('resize', resizeWand);
 
-    // Draw the wand on its canvas
+    // Draw a realistic dark wooden wand
     function drawWand(progress) {
       const w = wandCanvas.width;
       const h = wandCanvas.height;
       wCtx.clearRect(0, 0, w, h);
 
-      if (progress <= 0) return;
+      if (progress <= 0.005) return;
 
       const tipY = progress * h;
-      const handleY = 0; // wand starts from top
-      const cx = w / 2; // center x
-
-      // Wand shaft — gradient line getting thicker towards handle
+      const handleY = 0;
+      const cx = w / 2;
       const shaftLen = tipY;
-      if (shaftLen < 5) return;
+      if (shaftLen < 8) return;
 
-      // Draw shaft with gradient
-      const grad = wCtx.createLinearGradient(cx, handleY, cx, tipY);
-      grad.addColorStop(0, 'rgba(180, 170, 150, 0.1)');
-      grad.addColorStop(0.3, 'rgba(200, 190, 170, 0.25)');
-      grad.addColorStop(0.7, 'rgba(220, 210, 190, 0.4)');
-      grad.addColorStop(0.95, 'rgba(250, 245, 230, 0.6)');
-      grad.addColorStop(1, 'rgba(255, 255, 255, 0.9)');
+      // Wand dimensions — thick handle tapering to thin tip (like the image)
+      const handleWidth = 14; // thick end (handle)
+      const tipWidth = 4;     // thin end (tip)
 
-      // Shaft body — tapers from thick at top to thin at tip
+      // Draw the wand body — dark wood, conical shape
+      // Left edge and right edge with slight curve for realism
+      wCtx.save();
+
+      // Main wand shape
       wCtx.beginPath();
-      const topWidth = 4;
-      const tipWidth = 2;
-      wCtx.moveTo(cx - topWidth/2, handleY);
-      wCtx.lineTo(cx + topWidth/2, handleY);
-      wCtx.lineTo(cx + tipWidth/2, tipY);
+      wCtx.moveTo(cx - handleWidth/2, handleY);
+      wCtx.lineTo(cx + handleWidth/2, handleY);
+      // Slight curve on right side
+      wCtx.quadraticCurveTo(cx + handleWidth/2 - 1, tipY * 0.5, cx + tipWidth/2, tipY);
       wCtx.lineTo(cx - tipWidth/2, tipY);
+      // Slight curve on left side
+      wCtx.quadraticCurveTo(cx - handleWidth/2 + 1, tipY * 0.5, cx - handleWidth/2, handleY);
       wCtx.closePath();
-      wCtx.fillStyle = grad;
+
+      // Dark wood gradient
+      const woodGrad = wCtx.createLinearGradient(cx - handleWidth/2, 0, cx + handleWidth/2, 0);
+      woodGrad.addColorStop(0, '#0a0a0a');
+      woodGrad.addColorStop(0.15, '#1a1512');
+      woodGrad.addColorStop(0.3, '#2a2018');
+      woodGrad.addColorStop(0.5, '#1e1815');
+      woodGrad.addColorStop(0.7, '#2a2018');
+      woodGrad.addColorStop(0.85, '#1a1512');
+      woodGrad.addColorStop(1, '#0a0a0a');
+      wCtx.fillStyle = woodGrad;
       wCtx.fill();
 
-      // Wand glow along shaft
-      const glowGrad = wCtx.createLinearGradient(cx, handleY, cx, tipY);
-      glowGrad.addColorStop(0, 'transparent');
-      glowGrad.addColorStop(0.8, 'rgba(250, 250, 250, 0.03)');
-      glowGrad.addColorStop(1, 'rgba(250, 250, 250, 0.15)');
+      // Wood grain lines (subtle vertical streaks)
+      for (let i = 0; i < 5; i++) {
+        const xOff = (i - 2) * 2.5;
+        const alpha = 0.06 + Math.random() * 0.04;
+        wCtx.beginPath();
+        wCtx.moveTo(cx + xOff, handleY);
+        wCtx.lineTo(cx + xOff * (tipWidth/handleWidth), tipY);
+        wCtx.strokeStyle = `rgba(60, 45, 30, ${alpha})`;
+        wCtx.lineWidth = 0.8;
+        wCtx.stroke();
+      }
+
+      // Highlight reflection along the shaft (like polished wood)
+      const highlightGrad = wCtx.createLinearGradient(cx - 3, 0, cx + 5, 0);
+      highlightGrad.addColorStop(0, 'transparent');
+      highlightGrad.addColorStop(0.4, 'rgba(255, 255, 255, 0.06)');
+      highlightGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)');
+      highlightGrad.addColorStop(0.6, 'rgba(255, 255, 255, 0.06)');
+      highlightGrad.addColorStop(1, 'transparent');
+
       wCtx.beginPath();
-      wCtx.moveTo(cx - 12, handleY);
-      wCtx.lineTo(cx + 12, handleY);
-      wCtx.lineTo(cx + 6, tipY);
-      wCtx.lineTo(cx - 6, tipY);
+      wCtx.moveTo(cx - handleWidth/2, handleY);
+      wCtx.lineTo(cx + handleWidth/2, handleY);
+      wCtx.quadraticCurveTo(cx + handleWidth/2 - 1, tipY * 0.5, cx + tipWidth/2, tipY);
+      wCtx.lineTo(cx - tipWidth/2, tipY);
+      wCtx.quadraticCurveTo(cx - handleWidth/2 + 1, tipY * 0.5, cx - handleWidth/2, handleY);
       wCtx.closePath();
-      wCtx.fillStyle = glowGrad;
+      wCtx.fillStyle = highlightGrad;
       wCtx.fill();
 
-      // Wand tip — bright glowing point
-      const tipGlow = wCtx.createRadialGradient(cx, tipY, 0, cx, tipY, 20);
-      tipGlow.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-      tipGlow.addColorStop(0.2, 'rgba(255, 255, 255, 0.4)');
-      tipGlow.addColorStop(0.5, 'rgba(250, 250, 250, 0.1)');
+      // Handle grip ring (decorative band near top)
+      if (shaftLen > 40) {
+        const ringY = handleY + 20;
+        const ringW = handleWidth * 0.95;
+        wCtx.beginPath();
+        wCtx.ellipse(cx, ringY, ringW/2, 3, 0, 0, Math.PI * 2);
+        wCtx.fillStyle = 'rgba(40, 30, 20, 0.8)';
+        wCtx.fill();
+        wCtx.strokeStyle = 'rgba(80, 60, 40, 0.3)';
+        wCtx.lineWidth = 0.5;
+        wCtx.stroke();
+
+        // Second ring
+        wCtx.beginPath();
+        wCtx.ellipse(cx, ringY + 8, ringW/2 - 0.5, 2.5, 0, 0, Math.PI * 2);
+        wCtx.fillStyle = 'rgba(35, 25, 18, 0.7)';
+        wCtx.fill();
+      }
+
+      // Wand tip glow — magical energy at the end
+      const glowSize = 25 + Math.sin(Date.now() * 0.004) * 5;
+      const tipGlow = wCtx.createRadialGradient(cx, tipY, 0, cx, tipY, glowSize);
+      tipGlow.addColorStop(0, 'rgba(180, 220, 255, 0.8)');
+      tipGlow.addColorStop(0.15, 'rgba(150, 200, 255, 0.4)');
+      tipGlow.addColorStop(0.35, 'rgba(100, 160, 255, 0.15)');
+      tipGlow.addColorStop(0.6, 'rgba(80, 140, 255, 0.05)');
       tipGlow.addColorStop(1, 'transparent');
       wCtx.fillStyle = tipGlow;
-      wCtx.fillRect(cx - 20, tipY - 20, 40, 40);
+      wCtx.fillRect(cx - glowSize, tipY - glowSize, glowSize * 2, glowSize * 2);
 
-      // Bright core at tip
+      // Bright core at very tip
       wCtx.beginPath();
-      wCtx.arc(cx, tipY, 3, 0, Math.PI * 2);
-      wCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      wCtx.arc(cx, tipY, 3.5, 0, Math.PI * 2);
+      wCtx.fillStyle = 'rgba(220, 240, 255, 0.95)';
       wCtx.fill();
 
-      // Sparkle cross at tip
-      wCtx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
-      wCtx.lineWidth = 1;
-      const sparkLen = 8 + Math.sin(Date.now() * 0.005) * 3;
+      // Inner bright core
       wCtx.beginPath();
-      wCtx.moveTo(cx - sparkLen, tipY);
-      wCtx.lineTo(cx + sparkLen, tipY);
-      wCtx.moveTo(cx, tipY - sparkLen);
-      wCtx.lineTo(cx, tipY + sparkLen);
-      wCtx.stroke();
+      wCtx.arc(cx, tipY, 1.5, 0, Math.PI * 2);
+      wCtx.fillStyle = 'rgba(255, 255, 255, 1)';
+      wCtx.fill();
+
+      // Sparkle rays from tip (rotating)
+      const time = Date.now() * 0.003;
+      const rayCount = 4;
+      for (let i = 0; i < rayCount; i++) {
+        const angle = time + (i * Math.PI * 2 / rayCount);
+        const rayLen = 8 + Math.sin(time * 2 + i) * 4;
+        wCtx.beginPath();
+        wCtx.moveTo(cx + Math.cos(angle) * 4, tipY + Math.sin(angle) * 4);
+        wCtx.lineTo(cx + Math.cos(angle) * rayLen, tipY + Math.sin(angle) * rayLen);
+        wCtx.strokeStyle = `rgba(180, 220, 255, ${0.3 + Math.sin(time + i) * 0.2})`;
+        wCtx.lineWidth = 0.8;
+        wCtx.stroke();
+      }
+
+      wCtx.restore();
     }
 
     // Spark class
@@ -883,7 +940,7 @@
         this.size = 0.5 + Math.random() * 2.5;
         this.life = 1;
         this.decay = 0.015 + Math.random() * 0.035;
-        this.golden = Math.random() > 0.6; // some sparks are golden
+        this.golden = Math.random() > 0.7; // some sparks are golden/warm, rest are blue-white
       }
       update() {
         this.x += this.vx;
@@ -896,8 +953,8 @@
         if (this.life <= 0) return;
         const alpha = this.life * 0.9;
         const color = this.golden
-          ? `rgba(255, 220, 130, ${alpha})`
-          : `rgba(250, 250, 250, ${alpha})`;
+          ? `rgba(255, 200, 100, ${alpha})`
+          : `rgba(160, 200, 255, ${alpha})`;
         // Core
         sCtx.beginPath();
         sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -907,8 +964,8 @@
         sCtx.beginPath();
         sCtx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
         sCtx.fillStyle = this.golden
-          ? `rgba(255, 200, 80, ${alpha * 0.08})`
-          : `rgba(250, 250, 250, ${alpha * 0.08})`;
+          ? `rgba(255, 180, 60, ${alpha * 0.1})`
+          : `rgba(120, 180, 255, ${alpha * 0.1})`;
         sCtx.fill();
       }
     }
