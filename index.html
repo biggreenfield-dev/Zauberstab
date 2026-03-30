@@ -164,12 +164,23 @@
     /* Sparks canvas — sticky at wand tip */
     #journeySparks { position: sticky; top: calc(50vh - 40px); left: 50%; transform: translateX(-50%); width: 160px; height: 160px; pointer-events: none; z-index: 7; margin-left: -50px; }
 
+    /* Dream Grid */
+    .journey-step-grid { min-height: auto; padding: 80px 0; align-items: flex-start; }
+    .dream-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 800px; margin: 0 auto; }
+    .dream-cell { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 16/9; opacity: 0; transform: scale(0.85) translateY(20px); transition: all 0.8s cubic-bezier(0.2, 0, 0.38, 0.9); }
+    .dream-cell.visible { opacity: 1; transform: scale(1) translateY(0); }
+    .dream-cell video { width: 100%; height: 100%; object-fit: cover; }
+    .dream-cell::after { content: ''; position: absolute; inset: 0; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; pointer-events: none; transition: border-color 0.3s; }
+    .dream-cell:hover::after { border-color: rgba(255,255,255,0.2); }
+    .dream-cell:hover { transform: scale(1.03); box-shadow: 0 8px 40px rgba(0,0,0,0.5); z-index: 2; }
+
     @media (max-width: 768px) {
       .journey-step-content.left,
       .journey-step-content.right { padding: 0 24px; text-align: center; }
       .journey-step-content.right p { margin-left: auto; margin-right: auto; }
       .journey-step-content.left p { margin-left: auto; margin-right: auto; }
       .journey-wand-track { display: none; }
+      .dream-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
     }
 
     /* ── CTA Section ── */
@@ -348,16 +359,24 @@
         </div>
       </div>
 
-      <!-- Step 3 -->
-      <div class="journey-step" data-step="3">
-        <div class="journey-step-video">
-          <video autoplay muted loop playsinline src="journey3.mp4"></video>
-        </div>
-        <div class="journey-step-overlay"></div>
-        <div class="journey-step-content left">
+      <!-- Step 3 — Dream Grid -->
+      <div class="journey-step journey-step-grid" data-step="3">
+        <div class="journey-step-overlay" style="background:linear-gradient(to bottom, var(--bg) 0%, rgba(9,9,11,0.85) 15%, rgba(9,9,11,0.7) 50%, rgba(9,9,11,0.85) 85%, var(--bg) 100%);"></div>
+        <div class="journey-step-content" style="padding:0 24px; text-align:center; position:relative; z-index:3;">
           <div class="journey-step-num">Schritt 03</div>
-          <h3>Verwirkliche dir deine Träume</h3>
-          <p>Zauberstab ist der Anfang. Wohin die Reise geht, bestimmst du. Bau das Leben, das du dir immer vorgestellt hast.</p>
+          <h3 style="max-width:600px; margin:0 auto 40px;">Verwirkliche dir deine Träume</h3>
+          <!-- 2x4 Video Grid -->
+          <div class="dream-grid" id="dreamGrid">
+            <div class="dream-cell" data-delay="0"><video autoplay muted loop playsinline src="grid1.mp4"></video></div>
+            <div class="dream-cell" data-delay="150"><video autoplay muted loop playsinline src="grid2.mp4"></video></div>
+            <div class="dream-cell" data-delay="300"><video autoplay muted loop playsinline src="grid3.mp4"></video></div>
+            <div class="dream-cell" data-delay="100"><video autoplay muted loop playsinline src="grid4.mp4"></video></div>
+            <div class="dream-cell" data-delay="250"><video autoplay muted loop playsinline src="grid5.mp4"></video></div>
+            <div class="dream-cell" data-delay="50"><video autoplay muted loop playsinline src="grid6.mp4"></video></div>
+            <div class="dream-cell" data-delay="200"><video autoplay muted loop playsinline src="grid7.mp4"></video></div>
+            <div class="dream-cell" data-delay="350"><video autoplay muted loop playsinline src="grid8.mp4"></video></div>
+          </div>
+          <p style="color:rgba(255,255,255,0.5); max-width:500px; margin:32px auto 0; text-shadow:0 1px 15px rgba(0,0,0,0.5);">Zauberstab ist der Anfang. Wohin die Reise geht, bestimmst du.</p>
         </div>
       </div>
     </div>
@@ -961,6 +980,28 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
+  })();
+
+  // ── Dream Grid Reveal Animation ──
+  (function() {
+    const grid = document.getElementById('dreamGrid');
+    if (!grid) return;
+    const cells = grid.querySelectorAll('.dream-cell');
+    let revealed = false;
+
+    const gridObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !revealed) {
+          revealed = true;
+          cells.forEach((cell, i) => {
+            const delay = parseInt(cell.dataset.delay || 0) + i * 120;
+            setTimeout(() => cell.classList.add('visible'), delay);
+          });
+        }
+      });
+    }, { threshold: 0.2 });
+
+    gridObserver.observe(grid);
   })();
 
   // ── Stripe Payment Links ──
