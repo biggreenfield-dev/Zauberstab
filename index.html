@@ -155,19 +155,14 @@
     .journey-step p { font-size: 1rem; color: rgba(255,255,255,0.7); max-width: 400px; text-shadow: 0 1px 15px rgba(0,0,0,0.5); line-height: 1.6; }
     .journey-step-content.right p { margin-left: auto; }
 
-    /* Sticky Wand Timeline */
-    .journey-wand-track { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 3px; z-index: 2; pointer-events: none; }
-    .journey-wand-line { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 100%; background: linear-gradient(to bottom, transparent 0%, rgba(250,250,250,0.08) 10%, rgba(250,250,250,0.15) 50%, rgba(250,250,250,0.08) 90%, transparent 100%); }
-    .journey-wand-progress { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2px; height: 0%; background: linear-gradient(to bottom, rgba(250,250,250,0.5), rgba(250,250,250,0.8)); transition: height 0.05s linear; }
-    .journey-wand-icon { position: sticky; top: 50vh; left: 50%; transform: translate(-50%, -50%); width: 48px; height: 48px; z-index: 5; display: flex; align-items: center; justify-content: center; filter: drop-shadow(0 0 12px rgba(250,250,250,0.4)); }
-    .journey-wand-icon svg { width: 36px; height: 36px; }
-    .journey-spark-container { position: sticky; top: 50vh; left: 50%; transform: translate(-50%, -50%); width: 100px; height: 100px; z-index: 4; pointer-events: none; }
-    .journey-spark { position: absolute; width: 3px; height: 3px; background: #fafafa; border-radius: 50%; opacity: 0; }
+    /* Wand as growing timeline */
+    .journey-wand-track { position: absolute; top: 0; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; z-index: 6; pointer-events: none; }
 
-    /* Step indicators */
-    .journey-dots { position: sticky; top: 50vh; left: 50%; transform: translate(-50%, 40px); z-index: 5; display: flex; flex-direction: column; gap: 12px; align-items: center; width: 10px; pointer-events: none; }
-    .journey-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(250,250,250,0.15); border: 1px solid rgba(250,250,250,0.2); transition: all 0.4s ease; }
-    .journey-dot.active { background: #fafafa; border-color: #fafafa; box-shadow: 0 0 12px rgba(250,250,250,0.5); }
+    /* The wand body — SVG drawn by JS via canvas */
+    #wandCanvas { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 100%; }
+
+    /* Sparks canvas — sticky at wand tip */
+    #journeySparks { position: sticky; top: calc(50vh - 40px); left: 50%; transform: translateX(-50%); width: 160px; height: 160px; pointer-events: none; z-index: 7; margin-left: -50px; }
 
     @media (max-width: 768px) {
       .journey-step-content.left,
@@ -321,20 +316,10 @@
       <p class="section-sub">Von der Idee zur Freiheit — in drei Schritten.</p>
     </div>
     <div class="journey-container">
-      <!-- Wand Timeline Track -->
+      <!-- Wand Timeline — growing wand with sparking tip -->
       <div class="journey-wand-track">
-        <div class="journey-wand-line"></div>
-        <div class="journey-wand-progress" id="journeyProgress"></div>
-        <div class="journey-wand-icon" id="journeyWand">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fafafa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M15 4l-1 1 4 4 1-1a2.83 2.83 0 0 0-4-4z" fill="#fafafa" stroke="none"/>
-            <path d="M14 5L3 16v4h4L18 9"/>
-            <circle cx="19" cy="3" r="1.5" fill="#fafafa" opacity="0.6"/>
-            <circle cx="21.5" cy="5.5" r="1" fill="#fafafa" opacity="0.35"/>
-            <circle cx="17" cy="1" r="0.8" fill="#fafafa" opacity="0.25"/>
-          </svg>
-        </div>
-        <canvas id="journeySparks" style="position:sticky; top:calc(50vh - 60px); left:50%; transform:translateX(-50%); width:120px; height:120px; pointer-events:none; z-index:4;"></canvas>
+        <canvas id="wandCanvas"></canvas>
+        <canvas id="journeySparks"></canvas>
       </div>
 
       <!-- Step 1 -->
@@ -763,97 +748,206 @@
     animate();
   })();
 
-  // ── Journey Scroll Animation + Wand Sparks ──
+  // ── Journey: Growing Wand Timeline + Sparks ──
   (function() {
     const container = document.querySelector('.journey-container');
-    const progress = document.getElementById('journeyProgress');
+    const wandCanvas = document.getElementById('wandCanvas');
     const sparksCanvas = document.getElementById('journeySparks');
-    if (!container || !sparksCanvas) return;
+    if (!container || !wandCanvas || !sparksCanvas) return;
 
-    const ctx = sparksCanvas.getContext('2d');
-    sparksCanvas.width = 120;
-    sparksCanvas.height = 120;
+    const wCtx = wandCanvas.getContext('2d');
+    const sCtx = sparksCanvas.getContext('2d');
+
+    // Sparks canvas is 160x160
+    sparksCanvas.width = 160;
+    sparksCanvas.height = 160;
 
     const sparks = [];
-    let lastScrollY = 0;
-    let scrollDelta = 0;
+    let lastScrollY = window.scrollY;
+    let wandProgress = 0; // 0 to 1
 
+    // Resize wand canvas to match container
+    function resizeWand() {
+      const rect = container.getBoundingClientRect();
+      wandCanvas.width = 60;
+      wandCanvas.height = container.scrollHeight;
+    }
+    resizeWand();
+    window.addEventListener('resize', resizeWand);
+
+    // Draw the wand on its canvas
+    function drawWand(progress) {
+      const w = wandCanvas.width;
+      const h = wandCanvas.height;
+      wCtx.clearRect(0, 0, w, h);
+
+      if (progress <= 0) return;
+
+      const tipY = progress * h;
+      const handleY = 0; // wand starts from top
+      const cx = w / 2; // center x
+
+      // Wand shaft — gradient line getting thicker towards handle
+      const shaftLen = tipY;
+      if (shaftLen < 5) return;
+
+      // Draw shaft with gradient
+      const grad = wCtx.createLinearGradient(cx, handleY, cx, tipY);
+      grad.addColorStop(0, 'rgba(180, 170, 150, 0.1)');
+      grad.addColorStop(0.3, 'rgba(200, 190, 170, 0.25)');
+      grad.addColorStop(0.7, 'rgba(220, 210, 190, 0.4)');
+      grad.addColorStop(0.95, 'rgba(250, 245, 230, 0.6)');
+      grad.addColorStop(1, 'rgba(255, 255, 255, 0.9)');
+
+      // Shaft body — tapers from thick at top to thin at tip
+      wCtx.beginPath();
+      const topWidth = 4;
+      const tipWidth = 2;
+      wCtx.moveTo(cx - topWidth/2, handleY);
+      wCtx.lineTo(cx + topWidth/2, handleY);
+      wCtx.lineTo(cx + tipWidth/2, tipY);
+      wCtx.lineTo(cx - tipWidth/2, tipY);
+      wCtx.closePath();
+      wCtx.fillStyle = grad;
+      wCtx.fill();
+
+      // Wand glow along shaft
+      const glowGrad = wCtx.createLinearGradient(cx, handleY, cx, tipY);
+      glowGrad.addColorStop(0, 'transparent');
+      glowGrad.addColorStop(0.8, 'rgba(250, 250, 250, 0.03)');
+      glowGrad.addColorStop(1, 'rgba(250, 250, 250, 0.15)');
+      wCtx.beginPath();
+      wCtx.moveTo(cx - 12, handleY);
+      wCtx.lineTo(cx + 12, handleY);
+      wCtx.lineTo(cx + 6, tipY);
+      wCtx.lineTo(cx - 6, tipY);
+      wCtx.closePath();
+      wCtx.fillStyle = glowGrad;
+      wCtx.fill();
+
+      // Wand tip — bright glowing point
+      const tipGlow = wCtx.createRadialGradient(cx, tipY, 0, cx, tipY, 20);
+      tipGlow.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+      tipGlow.addColorStop(0.2, 'rgba(255, 255, 255, 0.4)');
+      tipGlow.addColorStop(0.5, 'rgba(250, 250, 250, 0.1)');
+      tipGlow.addColorStop(1, 'transparent');
+      wCtx.fillStyle = tipGlow;
+      wCtx.fillRect(cx - 20, tipY - 20, 40, 40);
+
+      // Bright core at tip
+      wCtx.beginPath();
+      wCtx.arc(cx, tipY, 3, 0, Math.PI * 2);
+      wCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      wCtx.fill();
+
+      // Sparkle cross at tip
+      wCtx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+      wCtx.lineWidth = 1;
+      const sparkLen = 8 + Math.sin(Date.now() * 0.005) * 3;
+      wCtx.beginPath();
+      wCtx.moveTo(cx - sparkLen, tipY);
+      wCtx.lineTo(cx + sparkLen, tipY);
+      wCtx.moveTo(cx, tipY - sparkLen);
+      wCtx.lineTo(cx, tipY + sparkLen);
+      wCtx.stroke();
+    }
+
+    // Spark class
     class Spark {
       constructor(intensity) {
-        this.x = 60;
-        this.y = 60;
-        const angle = Math.random() * Math.PI * 2;
-        const speed = 1 + Math.random() * 3 * intensity;
+        this.x = 80; // center of 160px canvas
+        this.y = 80;
+        const angle = -Math.PI/2 + (Math.random() - 0.5) * Math.PI * 1.5; // mostly upward/sideways
+        const speed = 1.5 + Math.random() * 3.5 * intensity;
         this.vx = Math.cos(angle) * speed;
-        this.vy = Math.sin(angle) * speed - 1;
-        this.size = 0.5 + Math.random() * 2;
+        this.vy = Math.sin(angle) * speed;
+        this.size = 0.5 + Math.random() * 2.5;
         this.life = 1;
-        this.decay = 0.02 + Math.random() * 0.04;
+        this.decay = 0.015 + Math.random() * 0.035;
+        this.golden = Math.random() > 0.6; // some sparks are golden
       }
       update() {
         this.x += this.vx;
         this.y += this.vy;
-        this.vy += 0.03; // gravity
-        this.vx *= 0.98;
+        this.vy += 0.04; // gravity
+        this.vx *= 0.97;
         this.life -= this.decay;
       }
       draw() {
         if (this.life <= 0) return;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(250, 250, 250, ${this.life * 0.8})`;
-        ctx.fill();
-        // glow
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(250, 250, 250, ${this.life * 0.1})`;
-        ctx.fill();
+        const alpha = this.life * 0.9;
+        const color = this.golden
+          ? `rgba(255, 220, 130, ${alpha})`
+          : `rgba(250, 250, 250, ${alpha})`;
+        // Core
+        sCtx.beginPath();
+        sCtx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        sCtx.fillStyle = color;
+        sCtx.fill();
+        // Glow
+        sCtx.beginPath();
+        sCtx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+        sCtx.fillStyle = this.golden
+          ? `rgba(255, 200, 80, ${alpha * 0.08})`
+          : `rgba(250, 250, 250, ${alpha * 0.08})`;
+        sCtx.fill();
       }
     }
 
+    // Animate sparks
     function animateSparks() {
-      ctx.clearRect(0, 0, 120, 120);
+      sCtx.clearRect(0, 0, 160, 160);
       for (let i = sparks.length - 1; i >= 0; i--) {
         sparks[i].update();
         sparks[i].draw();
         if (sparks[i].life <= 0) sparks.splice(i, 1);
       }
+      // Also redraw wand each frame for tip animation
+      drawWand(wandProgress);
       requestAnimationFrame(animateSparks);
     }
     animateSparks();
+
+    // Ambient sparks — emit even without scrolling
+    let ambientTimer = 0;
 
     // Scroll handler
     function onScroll() {
       const rect = container.getBoundingClientRect();
       const containerTop = rect.top + window.scrollY;
-      const containerHeight = rect.height;
+      const containerHeight = container.scrollHeight;
       const scrollY = window.scrollY;
       const viewH = window.innerHeight;
 
-      // Calculate progress through journey section
-      const start = containerTop - viewH;
+      // Progress: 0 at top of journey, 1 at bottom
+      // The wand tip should be at viewport center
+      const viewportCenter = scrollY + viewH / 2;
+      const start = containerTop;
       const end = containerTop + containerHeight;
-      const p = Math.max(0, Math.min(1, (scrollY - start) / (end - start)));
-
-      // Update progress line
-      if (progress) progress.style.height = (p * 100) + '%';
+      wandProgress = Math.max(0, Math.min(1, (viewportCenter - start) / (end - start)));
 
       // Emit sparks based on scroll speed
       const delta = Math.abs(scrollY - lastScrollY);
-      if (delta > 2 && p > 0 && p < 1) {
-        const intensity = Math.min(delta / 20, 2);
-        const count = Math.min(Math.floor(delta / 3), 8);
+      if (delta > 1 && wandProgress > 0 && wandProgress < 1) {
+        const intensity = Math.min(delta / 15, 2.5);
+        const count = Math.min(Math.floor(delta / 2), 10);
         for (let i = 0; i < count; i++) {
           sparks.push(new Spark(intensity));
         }
       }
+
+      // Ambient sparks when in view
+      ambientTimer++;
+      if (ambientTimer % 8 === 0 && wandProgress > 0.02 && wandProgress < 0.98) {
+        sparks.push(new Spark(0.3));
+      }
+
       lastScrollY = scrollY;
 
       // Fade in steps as they enter viewport
       document.querySelectorAll('.journey-step').forEach(step => {
         const stepRect = step.getBoundingClientRect();
         const stepCenter = stepRect.top + stepRect.height / 2;
-        const inView = stepCenter > 0 && stepCenter < viewH;
         const visibility = 1 - Math.abs(stepCenter - viewH / 2) / (viewH / 2);
         const content = step.querySelector('.journey-step-content');
         if (content) {
@@ -866,7 +960,7 @@
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // Initial call
+    onScroll();
   })();
 
   // ── Stripe Payment Links ──
