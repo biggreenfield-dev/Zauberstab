@@ -87,6 +87,17 @@
     .idea-card-bar.mid { background: var(--yellow); }
     .idea-card-bar.low { background: var(--red); }
 
+    /* Paywall styling */
+    .idea-card.locked { opacity: 0.7; }
+    .idea-card.locked:hover { transform: none; box-shadow: none; }
+    .ideas-blur-overlay { position: relative; }
+    .ideas-blur-overlay::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 0%, var(--bg) 70%); pointer-events: none; z-index: 2; }
+    .ideas-blur-section { filter: blur(6px); pointer-events: none; user-select: none; }
+    .paywall-banner { max-width: 600px; margin: -120px auto 60px; position: relative; z-index: 3; text-align: center; padding: 48px 32px; background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; }
+    .paywall-banner h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; }
+    .paywall-banner p { color: var(--muted); font-size: 14px; margin-bottom: 24px; line-height: 1.6; }
+    .paywall-banner .btn-primary { padding: 12px 32px; font-size: 15px; }
+
     /* Empty state */
     .empty-state { grid-column: 1 / -1; text-align: center; padding: 80px 24px; }
     .empty-state p { color: var(--dim); font-size: 15px; }
@@ -216,6 +227,34 @@ function getScoreClass(score) {
   return 'low';
 }
 
+function renderCard(idea, locked) {
+  const sc = getScoreClass(idea.score);
+  const scoreKeys = ['suchvolumen', 'wachstum', 'schmerzlevel', 'machbarkeit', 'umsatzpotenzial'];
+  const bars = scoreKeys.map(k => {
+    const v = idea.scores[k] || 5;
+    const h = Math.max(4, v * 2);
+    const cls = v >= 7 ? 'high' : v >= 5 ? 'mid' : 'low';
+    return '<div class="idea-card-bar ' + cls + '" style="height:' + h + 'px" title="' + k + ': ' + v + '"></div>';
+  }).join('');
+
+  const click = locked
+    ? "document.querySelector('.paywall-banner').scrollIntoView({behavior:'smooth'})"
+    : "location.href='idee.html?id=" + idea.slug + "'";
+
+  return '<div class="idea-card' + (locked ? ' locked' : '') + '" onclick="' + click + '">' +
+    '<div class="idea-card-top">' +
+      '<span class="idea-card-category">' + idea.kategorie + '</span>' +
+      '<div class="idea-card-score score-' + sc + '">' + idea.score + '</div>' +
+    '</div>' +
+    '<h3>' + idea.name + '</h3>' +
+    '<div class="idea-card-desc">' + idea.einzeiler + '</div>' +
+    '<div class="idea-card-meta">' +
+      '<span class="idea-card-date">' + idea.date + '</span>' +
+      '<div class="idea-card-bars">' + bars + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
 function renderIdeas() {
   const search = document.getElementById('searchBox').value.toLowerCase().trim();
   const sort = document.getElementById('sortSelect').value;
@@ -254,29 +293,16 @@ function renderIdeas() {
     return;
   }
 
-  grid.innerHTML = filtered.map(idea => {
-    const sc = getScoreClass(idea.score);
-    const scoreKeys = ['suchvolumen', 'wachstum', 'schmerzlevel', 'machbarkeit', 'umsatzpotenzial'];
-    const bars = scoreKeys.map(k => {
-      const v = idea.scores[k] || 5;
-      const h = Math.max(4, v * 2);
-      const cls = v >= 7 ? 'high' : v >= 5 ? 'mid' : 'low';
-      return '<div class="idea-card-bar ' + cls + '" style="height:' + h + 'px" title="' + k + ': ' + v + '"></div>';
-    }).join('');
+  const freeCards = filtered.slice(0, 3).map(i => renderCard(i, false)).join('');
+  const teaserCards = filtered.slice(3, 6).map(i => renderCard(i, true)).join('');
+  const blurredCards = filtered.slice(6).map(i => renderCard(i, true)).join('');
 
-    return '<div class="idea-card" onclick="location.href=\'idee.html?id=' + idea.slug + '\'">' +
-      '<div class="idea-card-top">' +
-        '<span class="idea-card-category">' + idea.kategorie + '</span>' +
-        '<div class="idea-card-score score-' + sc + '">' + idea.score + '</div>' +
-      '</div>' +
-      '<h3>' + idea.name + '</h3>' +
-      '<div class="idea-card-desc">' + idea.einzeiler + '</div>' +
-      '<div class="idea-card-meta">' +
-        '<span class="idea-card-date">' + idea.date + '</span>' +
-        '<div class="idea-card-bars">' + bars + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join('');
+  let html = freeCards + teaserCards;
+  if (filtered.length > 6) {
+    html += '</div><div class="ideas-blur-overlay"><div class="ideas-grid ideas-blur-section" style="padding-top:0;">' + blurredCards + '</div></div>';
+    html += '<div class="paywall-banner"><h3>500+ Ideen warten auf dich</h3><p>Schalte die komplette Ideen-Datenbank frei — mit Scorecard, Marktanalyse und Umsetzungsplan für jede Idee.</p><a href="index.html#pricing" class="btn btn-primary">Alle Ideen freischalten</a><div style="margin-top:16px; font-size:12px; color:var(--dim);">Ab 0,50€ pro Tag · Jederzeit kündbar</div></div>';
+  }
+  grid.innerHTML = html;
 }
 
 document.getElementById('searchBox').addEventListener('input', renderIdeas);
